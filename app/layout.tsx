@@ -32,9 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
-    title: {
-      default: "StructroTech - Learn AI, Cybersecurity, Linux & More",
-    },
+    title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
     description:
       "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
   },

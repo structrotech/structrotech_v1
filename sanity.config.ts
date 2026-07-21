@@ -1,4 +1,4 @@
-import { defineConfig } from 'sanity'
+import { defineConfig, type SchemaTypeDefinition } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { schemaTypes } from './sanity/schema'
 
@@ -10,6 +10,6 @@ export default defineConfig({
   basePath: '/studio',
   plugins: [deskTool()],
   schema: {
-    types: schemaTypes,
+    types: schemaTypes as SchemaTypeDefinition[],
   },
 })

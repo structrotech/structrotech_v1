@@ -4,6 +4,7 @@ import { resolveSanityImageUrl } from "@/sanity/client";
 import { AffiliateBoxBlock } from "@/components/blocks/AffiliateBoxBlock";
 import { SponsorBannerBlock } from "@/components/blocks/SponsorBannerBlock";
 import { DownloadBoxBlock } from "@/components/blocks/DownloadBoxBlock";
+import { AdPlaceholderBlock } from "@/components/blocks/AdPlaceholderBlock";
 
 // Optional size/alignment controls set in Sanity Studio.
 // Images without these fields fall back to full-width (previous behavior).
@@ -43,6 +44,8 @@ const components: PortableTextComponents = {
     affiliateBox: ({ value }: { value: any }) => <AffiliateBoxBlock value={value} />,
     sponsorBanner: ({ value }: { value: any }) => <SponsorBannerBlock value={value} />,
     downloadBox: ({ value }: { value: any }) => <DownloadBoxBlock value={value} />,
+    adSensePlaceholder: ({ value }: { value: any }) => <AdPlaceholderBlock value={value} />,
+    adPlaceholder: ({ value }: { value: any }) => <AdPlaceholderBlock value={value} />,
   },
 };
 

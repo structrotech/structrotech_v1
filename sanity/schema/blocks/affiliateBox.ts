@@ -13,7 +13,7 @@ export const affiliateBoxBlock = {
   ],
   preview: {
     select: { title: 'productName', enabled: 'enabled', media: 'image' },
-    prepare({ title, enabled, media }: { title?: string; enabled?: boolean; media?: unknown }) {
+    prepare({ title, enabled, media }: { title?: string; enabled?: boolean; media?: object }) {
       return {
         title: title ? `Affiliate Box — ${title}` : 'Affiliate Box',
         subtitle: enabled === false ? 'Disabled' : 'Enabled',

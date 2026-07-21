@@ -12,7 +12,7 @@ export const sponsorBannerBlock = {
   ],
   preview: {
     select: { title: 'brandName', enabled: 'enabled', media: 'logo' },
-    prepare({ title, enabled, media }: { title?: string; enabled?: boolean; media?: unknown }) {
+    prepare({ title, enabled, media }: { title?: string; enabled?: boolean; media?: object }) {
       return {
         title: title ? `Sponsor Banner — ${title}` : 'Sponsor Banner',
         subtitle: enabled === false ? 'Disabled' : 'Enabled',

@@ -3,13 +3,21 @@ import { cn } from "@/lib/utils";
 export interface AdPlaceholderValue {
   enabled?: boolean;
   position?: "top" | "middle" | "bottom" | "custom";
+  format?: "leaderboard" | "rectangle";
 }
 
 export function AdPlaceholderBlock({ value }: { value: AdPlaceholderValue }) {
   if (!value || value.enabled === false) return null;
 
-  const position = value.position ?? "custom";
-  const label = position.charAt(0).toUpperCase() + position.slice(1);
+  const isRectangle = value.format === "rectangle" || value.position === "middle";
+  const heightClass = isRectangle ? "h-[250px]" : "h-[90px]";
+
+  const label = value.format
+    ? value.format === "rectangle"
+      ? "Medium Rectangle (300×250)"
+      : "Leaderboard (728×90)"
+    : (value.position ?? "custom").charAt(0).toUpperCase() +
+      (value.position ?? "custom").slice(1);
 
   return (
     <div className="w-full my-6 not-prose">
@@ -19,7 +27,7 @@ export function AdPlaceholderBlock({ value }: { value: AdPlaceholderValue }) {
       <div
         className={cn(
           "w-full rounded-lg border border-border bg-card/50 flex items-center justify-center",
-          position === "middle" ? "h-[250px]" : "h-[90px]"
+          heightClass
         )}
       >
         <p className="text-sm text-muted-foreground">Ad Space - {label}</p>
