@@ -6,15 +6,20 @@ import { mapSanityTrick } from "@/lib/sanity-mappers";
 import { HeroSection } from "@/components/HeroSection";
 import { CategoriesSection } from "@/components/CategoriesSection";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
+  ...pageMetadata({
+    title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    description:
+      "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+    path: "/",
+  }),
   title: {
     absolute: "StructroTech - Learn AI, Cybersecurity, Linux & More",
   },
-  description:
-    "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
 };
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];

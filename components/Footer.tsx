@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  ArrowRight,
   ArrowUpRight,
   Github,
   Instagram,
@@ -10,15 +9,13 @@ import {
   Twitter,
   Youtube,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { footerContainer } from "@/lib/layout";
-import { inputCardClass } from "@/components/SearchField";
 
 const learningLinks = [
   { href: "/", label: "Home" },
   { href: "/categories", label: "Categories" },
   { href: "/blogs", label: "Blogs" },
-  { href: "/interesting-tricks", label: "Intresting Tricks" },
+  { href: "/interesting-tricks", label: "Interesting Tricks" },
   { href: "/resources", label: "Resources" },
   { href: "/about", label: "About Us" },
   { href: "/about#contact", label: "Contact us" },
@@ -35,7 +32,7 @@ const productLinks = [
 
 const socialLinks = [
   { href: "https://www.youtube.com/@Structrotech", icon: Youtube, label: "YouTube" },
-  { href: "https://www.linkedin.com/company/strutrotech/?viewAsMember=true", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://www.linkedin.com/company/structrotech/?viewAsMember=true", icon: Linkedin, label: "LinkedIn" },
   { href: "https://x.com/structrotech", icon: Twitter, label: "Twitter" },
   { href: "https://www.instagram.com/structrotech/", icon: Instagram, label: "Instagram" },
   { href: "https://github.com/structrotech", icon: Github, label: "GitHub" },
@@ -45,7 +42,7 @@ export function Footer() {
   return (
     <footer className="w-full border-t border-black/[0.06] bg-[#f0ebe4] py-16 dark:border-white/[0.06] dark:bg-[#0a0a0f]">
       <div className={footerContainer}>
-        <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-3 xl:grid-cols-5 xl:gap-10">
+        <div className="grid grid-cols-1 gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-4 xl:gap-10">
           {/* Brand */}
           <div className="flex flex-col items-center sm:items-start">
             <Link href="/" className="mb-4 inline-block font-sans text-xl font-bold leading-none">
@@ -126,34 +123,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div className="flex w-full flex-col items-center text-center">
-            <h3 className="mb-3 w-full text-sm font-bold text-foreground">Newsletter</h3>
-            <p className="mb-4 w-full max-w-[280px] text-sm font-normal text-muted-foreground">
-              Get the latest articles, resources and updates.
-            </p>
-            <form
-              className="mx-auto w-full max-w-[280px]"
-              onSubmit={(e) => e.preventDefault()}
-              aria-label="Newsletter signup"
-            >
-              <div className={cn(inputCardClass, "flex w-full items-center gap-2 pl-3 pr-1.5")}>
-                <input
-                  type="email"
-                  placeholder="Enter your email..."
-                  className="min-w-0 flex-1 bg-transparent py-3.5 text-sm font-normal text-foreground placeholder:text-muted-foreground focus:outline-none"
-                  aria-label="Email address"
-                />
-                <button
-                  type="submit"
-                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-colors hover:bg-primary/90"
-                  aria-label="Subscribe to newsletter"
-                >
-                  <ArrowRight className="h-4 w-4" />
-                </button>
-              </div>
-            </form>
-          </div>
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-black/[0.06] pt-8 text-center dark:border-white/[0.06] md:flex-row md:text-left">

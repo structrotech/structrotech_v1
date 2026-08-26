@@ -5,6 +5,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { HydrationReady } from "@/components/HydrationReady";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 
 // Failsafe: if the app hasn't hydrated within a few seconds (JS blocked or
 // failed to load), reveal the framer-motion content so the page isn't empty.
@@ -29,12 +31,24 @@ export const metadata: Metadata = {
   },
   description:
     "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
+    url: "/",
     title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
     description:
       "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+    images: [DEFAULT_OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    description:
+      "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+    images: [DEFAULT_OG_IMAGE],
   },
   generator: "Next.js",
   icons: {
@@ -75,6 +89,12 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} font-sans antialiased min-h-screen flex flex-col w-full m-0 p-0`}
       >
         <script dangerouslySetInnerHTML={{ __html: FORCE_REVEAL_SCRIPT }} />
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@graph": [organizationJsonLd(), websiteJsonLd()],
+          }}
+        />
         <ThemeProvider>
           <HydrationReady />
           {children}

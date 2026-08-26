@@ -3,14 +3,16 @@ import { CATEGORIES_QUERY } from "@/sanity/queries";
 import { mapSanityCategory } from "@/lib/sanity-mappers";
 import CategoriesPageClient from "./CategoriesPageClient";
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 
 export const revalidate = 60;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Categories",
   description:
     "Explore our comprehensive collection of learning resources across AI, cybersecurity, Linux, cloud, DevOps, and more.",
-};
+  path: "/categories",
+});
 
 export default async function CategoriesPage() {
   let categories = [];

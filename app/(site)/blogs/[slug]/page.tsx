@@ -5,6 +5,8 @@ import { POST_QUERY, POST_SLUGS_QUERY } from "@/sanity/queries";
 import { mapSanityAuthor } from "@/lib/sanity-mappers";
 import { resolveBlogRelations } from "@/lib/related-content";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, breadcrumbJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
@@ -33,8 +35,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = post.seoTitle || post.title;
   const description = post.seoDescription || post.excerpt || undefined;
-  const ogImage = post.coverImage ? resolveSanityImageUrl(post.coverImage) : undefined;
+  const ogImage = post.coverImage
+    ? resolveSanityImageUrl(post.coverImage)
+    : DEFAULT_OG_IMAGE;
   const canonicalPath = `/blogs/${slug}`;
+  const authorName = post.author?.name || undefined;
 
   return {
     title,
@@ -48,13 +53,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: [ogImage],
+      publishedTime: post.publishedAt || undefined,
+      authors: authorName ? [authorName] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: [ogImage],
     },
   };
 }
@@ -149,14 +156,14 @@ export default async function SingleBlogPage({ params }: PageProps) {
     "@type": "Article",
     headline: post.title,
     description: post.seoDescription || post.excerpt || undefined,
-    image: coverImage ? [coverImage] : undefined,
+    image: post.coverImage ? [coverImage] : undefined,
     datePublished: post.publishedAt || undefined,
     dateModified: post._updatedAt || post.publishedAt || undefined,
-    author: { "@type": "Person", name: author.name },
+    author: author.name ? { "@type": "Person", name: author.name } : undefined,
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -164,12 +171,16 @@ export default async function SingleBlogPage({ params }: PageProps) {
     },
   };
 
+  const breadcrumbLd = breadcrumbJsonLd([
+    { name: "Home", url: `${SITE_URL}/` },
+    { name: "Blogs", url: `${SITE_URL}/blogs` },
+    { name: post.title, url: `${SITE_URL}/blogs/${slug}` },
+  ]);
+
   return (
     <>
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
+    <JsonLd data={jsonLd} />
+    <JsonLd data={breadcrumbLd} />
     <ArticleDetail
       coverImage={coverImage}
       title={post.title}

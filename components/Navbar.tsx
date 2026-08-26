@@ -13,7 +13,7 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/categories", label: "Categories" },
   { href: "/blogs", label: "Blogs" },
-  { href: "/interesting-tricks", label: "Intresting Tricks" },
+  { href: "/interesting-tricks", label: "Interesting Tricks" },
   { href: "/about", label: "About Us" },
 ];
 
@@ -83,12 +83,6 @@ export function Navbar() {
 
             <div className="flex shrink-0 items-center justify-end gap-2 md:gap-3">
               <ThemeToggle />
-              <Link
-                href="/auth"
-                className="hidden md:inline-flex items-center rounded-full border border-primary px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                Get Started
-              </Link>
               <button
                 type="button"
                 onClick={() => setIsOpen(true)}
@@ -162,14 +156,6 @@ export function Navbar() {
                   );
                 })}
               </nav>
-
-              <Link
-                href="/auth"
-                onClick={closeMenu}
-                className="mt-4 inline-flex w-full items-center justify-center rounded-full border border-primary py-3 text-[15px] font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
-              >
-                Get Started
-              </Link>
             </motion.div>
           </>
         )}

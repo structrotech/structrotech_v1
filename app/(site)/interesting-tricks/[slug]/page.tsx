@@ -5,6 +5,8 @@ import { TRICK_QUERY, TRICK_SLUGS_QUERY } from "@/sanity/queries";
 import { mapSanityAuthor } from "@/lib/sanity-mappers";
 import { resolveTrickRelations } from "@/lib/related-content";
 import { SITE_URL, SITE_NAME } from "@/lib/site";
+import { DEFAULT_OG_IMAGE, breadcrumbJsonLd } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
 import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
@@ -33,8 +35,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = trick.seoTitle || trick.question;
   const description = trick.seoDescription || trick.excerpt || undefined;
-  const ogImage = trick.coverImage ? resolveSanityImageUrl(trick.coverImage) : undefined;
+  const ogImage = trick.coverImage
+    ? resolveSanityImageUrl(trick.coverImage)
+    : DEFAULT_OG_IMAGE;
   const canonicalPath = `/interesting-tricks/${slug}`;
+  const authorName = trick.author?.name || undefined;
 
   return {
     title,
@@ -48,13 +53,15 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: [ogImage],
+      publishedTime: trick.publishedAt || undefined,
+      authors: authorName ? [authorName] : undefined,
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: [ogImage],
     },
   };
 }
@@ -148,14 +155,14 @@ export default async function SingleTrickPage({ params }: PageProps) {
     "@type": "Article",
     headline: trick.question,
     description: trick.seoDescription || trick.excerpt || undefined,
-    image: coverImage ? [coverImage] : undefined,
+    image: trick.coverImage ? [coverImage] : undefined,
     datePublished: trick.publishedAt || undefined,
     dateModified: trick._updatedAt || trick.publishedAt || undefined,
-    author: { "@type": "Person", name: author.name },
+    author: author.name ? { "@type": "Person", name: author.name } : undefined,
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
-      logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.svg` },
+      logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
@@ -163,12 +170,16 @@ export default async function SingleTrickPage({ params }: PageProps) {
     },
   };
 
+  const breadcrumbLd = breadcrumbJsonLd([
+    { name: "Home", url: `${SITE_URL}/` },
+    { name: "Interesting Tricks", url: `${SITE_URL}/interesting-tricks` },
+    { name: trick.question, url: `${SITE_URL}/interesting-tricks/${slug}` },
+  ]);
+
   return (
     <>
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-    />
+    <JsonLd data={jsonLd} />
+    <JsonLd data={breadcrumbLd} />
     <ArticleDetail
       coverImage={coverImage}
       title={trick.question}

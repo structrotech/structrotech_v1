@@ -1,22 +1,33 @@
 # Content (CMS)
 
-Edit these JSON files to update site content without changing React code.
+Site content is managed in **Sanity Studio**, not JSON files.
 
-## Interesting Tricks — `interesting-tricks.json`
+## Open Studio
 
-Each entry:
+Visit `/studio` on the running site (or your deployed Studio URL) and sign in with a Sanity account that has access to the StructroTech project.
 
-| Field | Description |
-|-------|-------------|
-| `id` | Unique ID (kebab-case) |
-| `question` | Card title shown on the site |
-| `blogSlug` | Slug of the linked blog post under `/blogs/[slug]` |
-| `category` | Filter pill category (e.g. Productivity, Mobile, PC) |
-| `featuredOnHome` | `true` to show on homepage (max 8 recommended) |
-| `homeOrder` | Sort order on homepage (lower = first) |
-| `publishedAt` | ISO date for sorting |
-| `popular` | Optional; used by "Most Popular" sort |
+## What to edit in Studio
 
-After adding a trick, create a matching blog post in `lib/data.ts` with the same `slug` as `blogSlug`.
+| Document type | Used on the site |
+|---------------|------------------|
+| **Blog Post** (`post`) | `/blogs` listing and `/blogs/[slug]` |
+| **Interesting Trick** (`interestingTrick`) | homepage tricks, `/interesting-tricks`, and `/interesting-tricks/[slug]` |
+| **Category** | `/categories` and category pages |
+| **Author** | bylines and avatars on articles |
+| **Resource** | `/resources` |
 
-When you connect Sanity or another CMS later, replace `lib/interesting-tricks.ts` fetch logic with your API client; keep the same `InterestingTrick` type.
+## Article body blocks
+
+Inside a post or trick body you can insert:
+
+- Images (with size/alignment)
+- Affiliate Box
+- Sponsor Banner
+- Download Box
+- Google Ad Placeholder (`adSensePlaceholder`)
+
+Document-level **Ad Placeholders** (top / middle / bottom) are toggles on each post or trick, not body blocks.
+
+## Local JSON files
+
+`content/interesting-tricks.json` is leftover from an earlier mock-data setup. Live pages fetch from Sanity via `sanity/client.ts` and `sanity/queries.ts`. Do not treat those JSON files as the source of published content.
