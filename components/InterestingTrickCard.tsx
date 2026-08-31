@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
 import { fadeUpInViewProps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
@@ -67,10 +66,6 @@ export function InterestingTrickCard({
           >
             {question}
           </p>
-          <ArrowUpRight
-            className="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary"
-            aria-hidden="true"
-          />
         </div>
       </Link>
     </motion.div>

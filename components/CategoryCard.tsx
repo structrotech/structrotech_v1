@@ -43,12 +43,6 @@ export function CategoryCard({
             }}
           />
 
-          <div className="absolute top-3 left-3">
-            <span className="px-2 py-1 text-xs font-medium bg-black/60 text-white rounded-full backdrop-blur-sm">
-              {badge}
-            </span>
-          </div>
-
           <div className="absolute bottom-3 left-3 right-3">
             <h3 className="text-base font-bold text-white mb-1">{title}</h3>
             <p className="text-xs text-muted-foreground">

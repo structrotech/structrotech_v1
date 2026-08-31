@@ -63,25 +63,6 @@ export function BlogCard({
               className="object-cover transition-transform duration-300 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
-            {/* Category Badge */}
-            <div className="absolute top-3 left-3">
-              <span className="px-2 py-1 text-xs font-medium bg-primary/80 text-white rounded-full backdrop-blur-sm">
-                {category}
-              </span>
-            </div>
-            {/* Share Button */}
-            <button
-              className="absolute top-3 right-3 p-2 bg-black/40 rounded-full backdrop-blur-sm hover:bg-black/60 transition-colors"
-              onClick={handleShare}
-              aria-label={copied ? "Link copied" : "Share this post"}
-              title={copied ? "Link copied" : "Share"}
-            >
-              {copied ? (
-                <Check className="w-4 h-4 text-white" />
-              ) : (
-                <Share2 className="w-4 h-4 text-white" />
-              )}
-            </button>
           </div>
 
           {/* Content */}
@@ -94,22 +75,37 @@ export function BlogCard({
             </p>
 
             {/* Author & Meta */}
-            <div className="flex items-center gap-3">
-              <Image
-                src={author.avatar}
-                alt={author.name}
-                width={32}
-                height={32}
-                className="rounded-full"
-              />
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-card-foreground truncate">
-                  {author.name}
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {formattedDate} · {readTime} min read
-                </p>
+            <div className="flex items-center gap-3 justify-between">
+              <div className="flex items-center gap-3 flex-1 min-w-0">
+                <Image
+                  src={author.avatar}
+                  alt={author.name}
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-card-foreground truncate">
+                    {author.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {formattedDate} · {readTime} min read
+                  </p>
+                </div>
               </div>
+              {/* Share Button */}
+              <button
+                className="p-2 hover:bg-muted rounded-full transition-colors shrink-0 text-muted-foreground hover:text-primary"
+                onClick={handleShare}
+                aria-label={copied ? "Link copied" : "Share this post"}
+                title={copied ? "Link copied" : "Share"}
+              >
+                {copied ? (
+                  <Check className="w-4 h-4 text-emerald-500" />
+                ) : (
+                  <Share2 className="w-4 h-4" />
+                )}
+              </button>
             </div>
           </div>
         </article>

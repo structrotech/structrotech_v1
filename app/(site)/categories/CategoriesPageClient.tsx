@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FilterTabs } from "@/components/FilterTabs";
+import { SearchField } from "@/components/SearchField";
+import { SortSelect } from "@/components/SortSelect";
 import { cn } from "@/lib/utils";
 import type { CategoryListItem } from "@/lib/sanity-mappers";
 import {
@@ -12,29 +14,68 @@ import {
   pageHeaderBlock,
   pageTitle,
   pageSubtitle,
-  pageControlsRow,
+  pageSearchRow,
+  pageFiltersRow,
 } from "@/lib/layout";
 import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
+const sortOptions = ["Default", "Most Articles", "A-Z", "Z-A"];
 const MOBILE_CARD_LIMIT = 5;
 const INITIAL_VISIBLE = 12;
+
+function filterCategories(categories: CategoryListItem[], searchQuery: string, activeTab: string) {
+  let result = categories;
+
+  if (searchQuery.trim()) {
+    const q = searchQuery.toLowerCase();
+    result = result.filter(
+      (cat) =>
+        cat.title.toLowerCase().includes(q) ||
+        cat.description.toLowerCase().includes(q)
+    );
+  }
+
+  if (activeTab !== "All") {
+    result = result.filter((cat) => cat.tag === activeTab || cat.badge === activeTab);
+  }
+
+  return result;
+}
+
+function sortCategories(categories: CategoryListItem[], sortBy: string) {
+  const sorted = [...categories];
+  switch (sortBy) {
+    case "A-Z":
+      return sorted.sort((a, b) => a.title.localeCompare(b.title));
+    case "Z-A":
+      return sorted.sort((a, b) => b.title.localeCompare(a.title));
+    case "Most Articles":
+      return sorted.sort((a, b) => b.articleCount - a.articleCount);
+    case "Default":
+    default:
+      return sorted;
+  }
+}
 
 export default function CategoriesPageClient({
   categories,
 }: {
   categories: CategoryListItem[];
 }) {
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("All");
+  const [sortBy, setSortBy] = useState("Default");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
 
-  const filteredCategories = categories.filter((cat) => {
-    if (activeTab === "All") return true;
-    return cat.tag === activeTab || cat.badge === activeTab;
-  });
+  const filteredAndSorted = useMemo(() => {
+    let result = filterCategories(categories, searchQuery, activeTab);
+    result = sortCategories(result, sortBy);
+    return result;
+  }, [categories, searchQuery, activeTab, sortBy]);
 
-  const visibleCategories = filteredCategories.slice(0, visibleCount);
-  const hasMore = visibleCount < filteredCategories.length;
+  const visibleCategories = filteredAndSorted.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredAndSorted.length;
 
   function handleTabChange(tab: string) {
     setActiveTab(tab);
@@ -51,33 +92,52 @@ export default function CategoriesPageClient({
           </p>
         </motion.div>
 
-        <motion.div {...fadeUpMountProps(0.1)} className={pageControlsRow}>
+        <motion.div {...fadeUpMountProps(0.1)} className={pageSearchRow}>
+          <SearchField
+            value={searchQuery}
+            onChange={setSearchQuery}
+            placeholder="Search categories..."
+          />
+        </motion.div>
+
+        <motion.div {...fadeUpMountProps(0.2)} className={pageFiltersRow}>
           <FilterTabs
             tabs={categoryTabs}
             active={activeTab}
             onChange={handleTabChange}
-            align="center"
+          />
+          <SortSelect
+            value={sortBy}
+            options={sortOptions}
+            onChange={setSortBy}
+            label="Sort categories"
           />
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
-          {visibleCategories.map((category, index) => (
-            <div
-              key={category._id}
-              className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
-            >
-              <CategoryCard
-                title={category.title}
-                slug={category.slug}
-                image={category.image}
-                badge={category.badge}
-                articleCount={category.articleCount}
-                description={category.description}
-                animationDelay={listStaggerDelay(index)}
-              />
-            </div>
-          ))}
-        </div>
+        {visibleCategories.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
+            {visibleCategories.map((category, index) => (
+              <div
+                key={category._id}
+                className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
+              >
+                <CategoryCard
+                  title={category.title}
+                  slug={category.slug}
+                  image={category.image}
+                  badge={category.badge}
+                  articleCount={category.articleCount}
+                  description={category.description}
+                  animationDelay={listStaggerDelay(index)}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="py-20 text-center">
+            <p className="text-lg text-muted-foreground">No categories found matching your criteria.</p>
+          </div>
+        )}
 
         {hasMore && (
           <motion.div {...fadeUpMountProps(0)} className="mt-10 w-full text-center">
