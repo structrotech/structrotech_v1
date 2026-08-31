@@ -15,8 +15,7 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          StructroTech (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) operates the StructroTech website and
-          learning platform. This Privacy Policy explains how we collect, use, disclose, and
+          StructroTech (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is a personal project and learning platform. This Privacy Policy explains how we collect, use, disclose, and
           safeguard your information when you visit our site, subscribe to our newsletter, or
           use our services.
         </p>
@@ -146,7 +145,7 @@ const sections: LegalSection[] = [
         </ul>
         <p>
           To exercise these rights, contact us at{" "}
-          <a href="mailto:privacy@structrotech.com">privacy@structrotech.com</a>. We will respond
+          <a href="mailto:contactstructrotech@gmail.com">contactstructrotech@gmail.com</a>. We will respond
           within the timeframe required by applicable law.
         </p>
       </>

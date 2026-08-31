@@ -11,6 +11,7 @@ import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
 import { DownloadCard } from "@/components/DownloadCard";
+import { FALLBACK_POSTS } from "@/lib/fallback-data";
 
 export const revalidate = 60;
 
@@ -30,6 +31,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     post = await client.fetch(POST_QUERY, { slug });
   } catch (err) {
     console.error("Sanity metadata fetch error on blog detail:", err);
+  }
+  if (!post) {
+    post = FALLBACK_POSTS.find((p) => p.slug.current === slug);
   }
   if (!post) return {};
 
@@ -74,6 +78,10 @@ export default async function SingleBlogPage({ params }: PageProps) {
     post = await client.fetch(POST_QUERY, { slug });
   } catch (err) {
     console.error("Sanity fetch error on blog detail:", err);
+  }
+
+  if (!post) {
+    post = FALLBACK_POSTS.find((p) => p.slug.current === slug);
   }
 
   if (!post) {

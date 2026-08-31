@@ -7,6 +7,7 @@ import { HeroSection } from "@/components/HeroSection";
 import { CategoriesSection } from "@/components/CategoriesSection";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { FALLBACK_CATEGORIES, FALLBACK_TRICKS } from "@/lib/fallback-data";
 
 export const revalidate = 60;
 
@@ -25,7 +26,7 @@ export const metadata: Metadata = {
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
 
 export default async function Home() {
-  let categories: unknown[] = [];
+  let categories: any[] = [];
   let featuredTricks = [];
 
   try {
@@ -36,7 +37,9 @@ export default async function Home() {
     categories = fetchedCategories;
     featuredTricks = fetchedTricks.map(mapSanityTrick);
   } catch (err) {
-    console.error("Sanity fetch error on homepage:", err);
+    console.error("Sanity fetch error on homepage, loading local fallbacks:", err);
+    categories = FALLBACK_CATEGORIES;
+    featuredTricks = FALLBACK_TRICKS.map(mapSanityTrick);
   }
 
   return (

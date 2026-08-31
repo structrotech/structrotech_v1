@@ -75,8 +75,8 @@ export function LegalPage({ title, description, lastUpdated, sections }: LegalPa
               Contact us via About
             </Link>{" "}
             or email{" "}
-            <a href="mailto:legal@structrotech.com" className="font-medium text-primary hover:underline">
-              legal@structrotech.com
+            <a href="mailto:contactstructrotech@gmail.com" className="font-medium text-primary hover:underline">
+              contactstructrotech@gmail.com
             </a>
             .
           </p>

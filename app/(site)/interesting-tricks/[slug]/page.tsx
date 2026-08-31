@@ -11,6 +11,7 @@ import { ArticleDetail } from "@/components/ArticleDetail";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { BlogCard } from "@/components/BlogCard";
 import { DownloadCard } from "@/components/DownloadCard";
+import { FALLBACK_TRICKS } from "@/lib/fallback-data";
 
 export const revalidate = 60;
 
@@ -30,6 +31,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     trick = await client.fetch(TRICK_QUERY, { slug });
   } catch (err) {
     console.error("Sanity metadata fetch error on trick detail:", err);
+  }
+  if (!trick) {
+    trick = FALLBACK_TRICKS.find((t) => t.slug.current === slug);
   }
   if (!trick) return {};
 
@@ -74,6 +78,10 @@ export default async function SingleTrickPage({ params }: PageProps) {
     trick = await client.fetch(TRICK_QUERY, { slug });
   } catch (err) {
     console.error("Sanity fetch error on trick detail:", err);
+  }
+
+  if (!trick) {
+    trick = FALLBACK_TRICKS.find((t) => t.slug.current === slug);
   }
 
   if (!trick) {

@@ -4,6 +4,7 @@ import { mapSanityCategory } from "@/lib/sanity-mappers";
 import CategoriesPageClient from "./CategoriesPageClient";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { FALLBACK_CATEGORIES } from "@/lib/fallback-data";
 
 export const revalidate = 60;
 
@@ -20,7 +21,8 @@ export default async function CategoriesPage() {
     const fetched = await client.fetch(CATEGORIES_QUERY);
     categories = fetched.map(mapSanityCategory);
   } catch (err) {
-    console.error("Sanity fetch error on categories page:", err);
+    console.error("Sanity fetch error on categories page, loading local fallbacks:", err);
+    categories = FALLBACK_CATEGORIES.map(mapSanityCategory);
   }
 
   return <CategoriesPageClient categories={categories} />;

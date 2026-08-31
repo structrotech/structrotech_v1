@@ -4,6 +4,7 @@ import { mapSanityResource } from "@/lib/sanity-mappers";
 import ResourcesPageClient from "./ResourcesPageClient";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
+import { FALLBACK_RESOURCES } from "@/lib/fallback-data";
 
 export const revalidate = 60;
 
@@ -22,7 +23,8 @@ export default async function ResourcesPage() {
       .filter((r: { slug?: { current?: string } }) => r.slug?.current)
       .map(mapSanityResource);
   } catch (err) {
-    console.error("Sanity fetch error on resources page:", err);
+    console.error("Sanity fetch error on resources page, loading local fallbacks:", err);
+    initialResources = FALLBACK_RESOURCES.map(mapSanityResource);
   }
 
   return <ResourcesPageClient initialResources={initialResources} />;

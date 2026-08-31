@@ -10,6 +10,7 @@ import {
 } from "@/sanity/queries";
 import { mapSanityCategory, mapSanityPostForCard } from "@/lib/sanity-mappers";
 import { pageContainer } from "@/lib/layout";
+import { FALLBACK_CATEGORIES, FALLBACK_POSTS } from "@/lib/fallback-data";
 
 export const revalidate = 60;
 
@@ -36,6 +37,13 @@ export default async function CategoryDetailPage({ params }: PageProps) {
     ]);
   } catch (err) {
     console.error("Sanity fetch error on category detail:", err);
+  }
+
+  if (!categoryRaw) {
+    categoryRaw = FALLBACK_CATEGORIES.find((c) => c.slug.current === slug) || null;
+    if (categoryRaw) {
+      postsRaw = FALLBACK_POSTS.filter((p) => p.category?.slug?.current === slug);
+    }
   }
 
   if (!categoryRaw) {

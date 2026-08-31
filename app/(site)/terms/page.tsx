@@ -15,8 +15,8 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          These Terms of Service (&quot;Terms&quot;) govern your access to and use of the StructroTech
-          website, content, and related services (collectively, the &quot;Service&quot;). By accessing or
+          These Terms of Service (&quot;Terms&quot;) govern your access to and use of StructroTech,
+          a personal project and brand, including its website, content, and related services (collectively, the &quot;Service&quot;). By accessing or
           using the Service, you agree to be bound by these Terms and our Privacy Policy.
         </p>
         <p>
@@ -46,7 +46,7 @@ const sections: LegalSection[] = [
           When you create an account, you agree to provide accurate information and keep your
           credentials confidential. You are responsible for all activity under your account.
           Notify us immediately at{" "}
-          <a href="mailto:support@structrotech.com">support@structrotech.com</a> if you suspect
+          <a href="mailto:contactstructrotech@gmail.com">contactstructrotech@gmail.com</a> if you suspect
           unauthorized access.
         </p>
         <p>We may suspend or terminate accounts that violate these Terms or pose security risks.</p>
@@ -166,10 +166,10 @@ const sections: LegalSection[] = [
     title: "Governing Law and Disputes",
     content: (
       <p>
-        These Terms are governed by the laws of the jurisdiction in which StructroTech operates,
+        These Terms are governed by the laws of India and the State of Telangana,
         without regard to conflict-of-law principles. Disputes shall be resolved through good-faith
-        negotiation first; if unresolved, they may be submitted to binding arbitration or courts
-        of competent jurisdiction as required by applicable law.
+        negotiation first; if unresolved, they may be submitted to the exclusive jurisdiction of the
+        courts located in Telangana, India.
       </p>
     ),
   },

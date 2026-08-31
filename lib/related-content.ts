@@ -11,6 +11,7 @@ import {
   type TrickListItem,
   type BlogListPost,
 } from "@/lib/sanity-mappers";
+import { FALLBACK_TRICKS, FALLBACK_POSTS } from "@/lib/fallback-data";
 
 async function fetchTricks(query: string, params: Record<string, unknown>): Promise<TrickListItem[]> {
   try {
@@ -19,8 +20,8 @@ async function fetchTricks(query: string, params: Record<string, unknown>): Prom
       mapSanityTrick(t as Parameters<typeof mapSanityTrick>[0])
     );
   } catch (err) {
-    console.error("Related tricks fetch error:", err);
-    return [];
+    console.error("Related tricks fetch error, loading fallback:", err);
+    return FALLBACK_TRICKS.map(mapSanityTrick);
   }
 }
 
@@ -31,8 +32,8 @@ async function fetchBlogs(query: string, params: Record<string, unknown>): Promi
       mapSanityPostForCard(b as Parameters<typeof mapSanityPostForCard>[0])
     );
   } catch (err) {
-    console.error("Related blogs fetch error:", err);
-    return [];
+    console.error("Related blogs fetch error, loading fallback:", err);
+    return FALLBACK_POSTS.map(mapSanityPostForCard);
   }
 }
 
