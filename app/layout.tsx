@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
@@ -11,17 +10,6 @@ import { JsonLd } from "@/components/JsonLd";
 // Failsafe: if the app hasn't hydrated within a few seconds (JS blocked or
 // failed to load), reveal the framer-motion content so the page isn't empty.
 const FORCE_REVEAL_SCRIPT = `window.__fmRevealTimer=window.setTimeout(function(){document.documentElement.classList.add('fm-force-reveal')},3500);`;
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["700", "800"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -68,8 +56,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="site-canvas w-full" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
-        className={`${inter.variable} ${playfair.variable} font-sans antialiased min-h-screen flex flex-col w-full m-0 p-0`}
+        className="font-sans antialiased min-h-screen flex flex-col w-full m-0 p-0"
       >
         <script dangerouslySetInnerHTML={{ __html: FORCE_REVEAL_SCRIPT }} />
         <JsonLd
