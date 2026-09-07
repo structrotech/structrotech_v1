@@ -128,6 +128,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Desktop 125% visual scaling (matches Chrome 125% browser zoom by default on desktop) */
+@media (min-width: 1024px) {
+  html {
+    zoom: 1.25;
+  }
+}
+
 .site-canvas,
 .site-canvas body {
   background-color: var(--site-bg-base);
