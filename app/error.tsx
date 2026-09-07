@@ -22,12 +22,13 @@ export default function Error({
           >
             Try again
           </button>
-          <Link
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a
             href="/"
             className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
           >
             Back to homepage
-          </Link>
+          </a>
         </div>
       }
     />
