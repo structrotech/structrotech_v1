@@ -9,7 +9,6 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { ResourceListItem } from "@/lib/sanity-mappers";
 import { sortResources } from "@/lib/sort";
-import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -23,7 +22,6 @@ import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const resourceTabs = ["All", "Roadmaps", "Cheatsheets", "Notes", "Guides", "Tools"];
 const resourceSortOptions = ["A-Z", "Z-A", "By Type", "Downloads First"];
-const MOBILE_CARD_LIMIT = 5;
 
 export default function ResourcesPageClient({
   initialResources,
@@ -84,7 +82,7 @@ export default function ResourcesPageClient({
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {visibleResources.map((resource, index) => (
-              <div key={resource.slug} className={cn(index >= MOBILE_CARD_LIMIT && "hidden md:block")}>
+              <div key={resource.slug}>
                 <ResourceCard
                   title={resource.title}
                   slug={resource.slug}

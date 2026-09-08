@@ -8,7 +8,6 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { BlogListPost } from "@/lib/sanity-mappers";
 import { sortPosts } from "@/lib/sort";
-import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -21,7 +20,6 @@ import {
 import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
-const MOBILE_CARD_LIMIT = 5;
 
 function filterPosts(posts: BlogListPost[], searchQuery: string, activeCategory: string) {
   let result = posts;
@@ -88,7 +86,7 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {visiblePosts.map((post, index) => (
-              <div key={post.slug} className={cn(index >= MOBILE_CARD_LIMIT && "hidden md:block")}>
+              <div key={post.slug}>
                 <BlogCard
                   title={post.title}
                   slug={post.slug}

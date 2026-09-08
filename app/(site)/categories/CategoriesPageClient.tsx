@@ -6,7 +6,6 @@ import { CategoryCard } from "@/components/CategoryCard";
 import { FilterTabs } from "@/components/FilterTabs";
 import { SearchField } from "@/components/SearchField";
 import { SortSelect } from "@/components/SortSelect";
-import { cn } from "@/lib/utils";
 import type { CategoryListItem } from "@/lib/sanity-mappers";
 import {
   pageContainer,
@@ -21,7 +20,6 @@ import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
 const sortOptions = ["Default", "Most Articles", "A-Z", "Z-A"];
-const MOBILE_CARD_LIMIT = 5;
 const INITIAL_VISIBLE = 12;
 
 function filterCategories(categories: CategoryListItem[], searchQuery: string, activeTab: string) {
@@ -117,10 +115,7 @@ export default function CategoriesPageClient({
         {visibleCategories.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-2">
             {visibleCategories.map((category, index) => (
-              <div
-                key={category._id}
-                className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}
-              >
+              <div key={category._id}>
                 <CategoryCard
                   title={category.title}
                   slug={category.slug}

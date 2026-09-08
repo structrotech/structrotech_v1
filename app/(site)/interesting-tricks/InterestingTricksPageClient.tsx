@@ -8,7 +8,6 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { TrickListItem } from "@/lib/sanity-mappers";
 import { sortTricks } from "@/lib/sort";
-import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -22,7 +21,6 @@ import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/mot
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
 const INITIAL_VISIBLE = 8;
-const MOBILE_CARD_LIMIT = 5;
 
 function filterTricks(tricks: TrickListItem[], searchQuery: string, activeCategory: string) {
   let result = tricks;
@@ -91,7 +89,7 @@ export default function InterestingTricksPageClient({
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {visibleTricks.map((trick, index) => (
-              <div key={trick.id} className={cn(index >= MOBILE_CARD_LIMIT && "hidden sm:block")}>
+              <div key={trick.id}>
                 <InterestingTrickCard
                   index={index + 1}
                   question={trick.question}
