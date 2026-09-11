@@ -90,6 +90,8 @@ export default function ResourcesPageClient({
                   image={resource.image}
                   description={resource.description}
                   downloadUrl={resource.downloadUrl}
+                  author={resource.author}
+                  publishedAt={resource.publishedAt}
                   animationDelay={listStaggerDelay(index)}
                 />
               </div>

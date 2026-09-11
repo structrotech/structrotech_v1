@@ -22,6 +22,9 @@ export function CategoriesSection({ categories, categoryTabs }: CategoriesSectio
             <div className="w-1 h-6 bg-primary rounded-full shrink-0" />
             <h2 className="text-[28px] font-bold text-foreground">Categories</h2>
           </div>
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+            Explore curated tech domains with structured guides and tutorials.
+          </p>
         </motion.div>
 
         <CategoriesList categories={categories} categoryTabs={categoryTabs} maxItems={8} />

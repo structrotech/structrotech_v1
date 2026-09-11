@@ -7,7 +7,10 @@ export const CATEGORIES_QUERY = groq`
     slug,
     image,
     description,
-    articleCount,
+    "articleCount": select(
+      count(*[_type == "post" && (references(^._id) || category._ref == ^._id || category->slug.current == ^.slug.current)]) > 0 => count(*[_type == "post" && (references(^._id) || category._ref == ^._id || category->slug.current == ^.slug.current)]),
+      coalesce(articleCount, 0)
+    ),
     tag
   }
 `
@@ -100,7 +103,10 @@ export const CATEGORY_QUERY = groq`
     slug,
     image,
     description,
-    articleCount,
+    "articleCount": select(
+      count(*[_type == "post" && (references(^._id) || category._ref == ^._id || category->slug.current == ^.slug.current)]) > 0 => count(*[_type == "post" && (references(^._id) || category._ref == ^._id || category->slug.current == ^.slug.current)]),
+      coalesce(articleCount, 0)
+    ),
     tag
   }
 `
@@ -286,6 +292,13 @@ export const RESOURCES_QUERY = groq`
     type,
     image,
     description,
-    downloadUrl
+    downloadUrl,
+    publishedAt,
+    author-> {
+      name,
+      slug,
+      avatar,
+      bio
+    }
   }
 `

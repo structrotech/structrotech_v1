@@ -141,6 +141,8 @@ export function mapSanityResource(raw: {
   image?: unknown;
   description?: string;
   downloadUrl?: string;
+  publishedAt?: string;
+  author?: { name?: string; slug?: { current?: string }; avatar?: unknown; bio?: string } | null;
 }): ResourceListItem {
   return {
     title: raw.title,
@@ -149,5 +151,7 @@ export function mapSanityResource(raw: {
     image: resolveSanityImageUrl(raw.image),
     description: raw.description ?? "",
     downloadUrl: raw.downloadUrl,
+    publishedAt: raw.publishedAt ?? "",
+    author: mapSanityAuthor(raw.author ?? null),
   };
 }

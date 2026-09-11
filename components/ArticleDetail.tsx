@@ -64,7 +64,7 @@ export function ArticleDetail({
             <AdPlaceholderBlock value={{ enabled: true, position: "top" }} />
           ) : null}
 
-          <div className="relative w-full h-[300px] md:h-[400px] rounded-2xl overflow-hidden mb-8">
+          <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8">
             <Image src={coverImage} alt={title} fill className="object-cover" priority />
           </div>
 

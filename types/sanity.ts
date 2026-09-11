@@ -46,4 +46,6 @@ export interface Resource {
   image: string;
   description: string;
   downloadUrl?: string;
+  author?: Author;
+  publishedAt?: string;
 }

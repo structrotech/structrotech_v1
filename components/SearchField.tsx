@@ -11,7 +11,7 @@ interface SearchFieldProps {
 }
 
 const inputCardClass =
-  "group relative w-full rounded-full border border-border bg-card/90 shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-primary/50 hover:bg-card hover:shadow-md hover:ring-2 hover:ring-primary/15 focus-within:border-primary focus-within:bg-card focus-within:shadow-md focus-within:ring-2 focus-within:ring-primary/30";
+  "group relative w-full rounded-full border border-border bg-card shadow-sm backdrop-blur-sm transition-all duration-200 hover:border-primary/50 hover:bg-card hover:shadow-md hover:ring-2 hover:ring-primary/15 focus-within:border-primary focus-within:bg-card focus-within:shadow-md focus-within:ring-2 focus-within:ring-primary/30";
 
 export function SearchField({
   value,

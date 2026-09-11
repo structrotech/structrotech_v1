@@ -8,6 +8,7 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { BlogListPost } from "@/lib/sanity-mappers";
 import { sortPosts } from "@/lib/sort";
+import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -20,6 +21,7 @@ import {
 import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
+const MOBILE_CARD_LIMIT = 5;
 
 function filterPosts(posts: BlogListPost[], searchQuery: string, activeCategory: string) {
   let result = posts;
@@ -86,7 +88,7 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {visiblePosts.map((post, index) => (
-              <div key={post.slug}>
+              <div key={post.slug} className={cn(index >= 5 && "hidden md:block")}>
                 <BlogCard
                   title={post.title}
                   slug={post.slug}
@@ -112,9 +114,10 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
             <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="px-6 py-3 bg-card border border-border text-foreground font-medium rounded-full hover:border-primary/50 transition-colors min-h-[44px]"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
               Explore More
+              <span aria-hidden="true">&rarr;</span>
             </button>
           </motion.div>
         )}

@@ -55,7 +55,7 @@ export function BlogCard({
       <Link href={`/blogs/${slug}`}>
         <article className="group rounded-2xl overflow-hidden border border-border bg-card backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-primary/50 hover:shadow-[0_0_20px_rgba(139,92,246,0.4)]">
           {/* Cover Image */}
-          <div className="relative h-[180px] overflow-hidden">
+          <div className="relative aspect-video w-full overflow-hidden">
             <Image
               src={coverImage}
               alt={title}
@@ -66,44 +66,44 @@ export function BlogCard({
           </div>
 
           {/* Content */}
-          <div className="p-4">
-            <h3 className="text-base font-bold text-card-foreground mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+          <div className="p-3.5">
+            <h3 className="text-[15px] font-bold text-card-foreground mb-1.5 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
               {title}
             </h3>
-            <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+            <p className="text-[13px] text-muted-foreground line-clamp-2 mb-3 leading-relaxed">
               {excerpt}
             </p>
 
             {/* Author & Meta */}
-            <div className="flex items-center gap-3 justify-between">
-              <div className="flex items-center gap-3 flex-1 min-w-0">
+            <div className="flex items-center gap-2.5 justify-between">
+              <div className="flex items-center gap-2.5 flex-1 min-w-0">
                 <Image
                   src={author.avatar}
                   alt={author.name}
-                  width={32}
-                  height={32}
-                  className="rounded-full"
+                  width={28}
+                  height={28}
+                  className="rounded-full shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-card-foreground truncate">
+                  <p className="text-xs font-medium text-card-foreground truncate">
                     {author.name}
                   </p>
-                  <p className="text-xs text-muted-foreground">
-                    {formattedDate} · {readTime} min read
+                  <p className="text-[11px] text-muted-foreground">
+                    {formattedDate}
                   </p>
                 </div>
               </div>
               {/* Share Button */}
               <button
-                className="p-2 hover:bg-muted rounded-full transition-colors shrink-0 text-muted-foreground hover:text-primary"
+                className="p-1.5 hover:bg-muted rounded-full transition-colors shrink-0 text-muted-foreground hover:text-primary"
                 onClick={handleShare}
                 aria-label={copied ? "Link copied" : "Share this post"}
                 title={copied ? "Link copied" : "Share"}
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
                 ) : (
-                  <Share2 className="w-4 h-4" />
+                  <Share2 className="w-3.5 h-3.5" />
                 )}
               </button>
             </div>

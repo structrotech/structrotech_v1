@@ -8,6 +8,7 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { TrickListItem } from "@/lib/sanity-mappers";
 import { sortTricks } from "@/lib/sort";
+import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -21,6 +22,7 @@ import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/mot
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
 const INITIAL_VISIBLE = 8;
+const MOBILE_CARD_LIMIT = 5;
 
 function filterTricks(tricks: TrickListItem[], searchQuery: string, activeCategory: string) {
   let result = tricks;
@@ -89,7 +91,7 @@ export default function InterestingTricksPageClient({
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {visibleTricks.map((trick, index) => (
-              <div key={trick.id}>
+              <div key={trick.id} className={cn(index >= 5 && "hidden md:block")}>
                 <InterestingTrickCard
                   index={index + 1}
                   question={trick.question}
@@ -112,9 +114,10 @@ export default function InterestingTricksPageClient({
             <button
               type="button"
               onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="min-h-[44px] rounded-full border border-border bg-card px-6 py-3 font-medium text-foreground transition-colors hover:border-primary/50"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
             >
               Explore More
+              <span aria-hidden="true">&rarr;</span>
             </button>
           </motion.div>
         )}
