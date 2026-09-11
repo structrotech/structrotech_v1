@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { CategoryCard } from "@/components/CategoryCard";
 import { FilterTabs } from "@/components/FilterTabs";
@@ -20,7 +20,8 @@ import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
 const sortOptions = ["Default", "Most Articles", "A-Z", "Z-A"];
-const INITIAL_VISIBLE = 12;
+const INITIAL_VISIBLE = 6;
+const STEP = 3;
 
 function filterCategories(categories: CategoryListItem[], searchQuery: string, activeTab: string) {
   let result = categories;
@@ -65,6 +66,12 @@ export default function CategoriesPageClient({
   const [activeTab, setActiveTab] = useState("All");
   const [sortBy, setSortBy] = useState("Default");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [hasExploredAll, setHasExploredAll] = useState(false);
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE);
+    setHasExploredAll(false);
+  }, [searchQuery, activeTab, sortBy]);
 
   const filteredAndSorted = useMemo(() => {
     let result = filterCategories(categories, searchQuery, activeTab);
@@ -73,12 +80,33 @@ export default function CategoriesPageClient({
   }, [categories, searchQuery, activeTab, sortBy]);
 
   const visibleCategories = filteredAndSorted.slice(0, visibleCount);
+  const canToggle = filteredAndSorted.length > INITIAL_VISIBLE;
   const hasMore = visibleCount < filteredAndSorted.length;
+  const showExploreLess = hasExploredAll && visibleCount > INITIAL_VISIBLE;
 
   function handleTabChange(tab: string) {
     setActiveTab(tab);
-    setVisibleCount(INITIAL_VISIBLE);
   }
+
+  const handleExploreMore = () => {
+    const next = visibleCount + STEP;
+    if (next >= filteredAndSorted.length) {
+      setVisibleCount(filteredAndSorted.length);
+      setHasExploredAll(true);
+    } else {
+      setVisibleCount(next);
+    }
+  };
+
+  const handleExploreLess = () => {
+    const next = visibleCount - STEP;
+    if (next <= INITIAL_VISIBLE) {
+      setVisibleCount(INITIAL_VISIBLE);
+      setHasExploredAll(false);
+    } else {
+      setVisibleCount(next);
+    }
+  };
 
   return (
     <div className={pageShell}>
@@ -134,16 +162,28 @@ export default function CategoriesPageClient({
           </div>
         )}
 
-        {hasMore && (
-          <motion.div {...fadeUpMountProps(0)} className="mt-10 w-full text-center">
+        {canToggle && (
+          <motion.div {...fadeUpMountProps(0)} className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <button
               type="button"
-              onClick={() => setVisibleCount((prev) => prev + 8)}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              disabled={!hasMore}
+              onClick={handleExploreMore}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-primary"
             >
               Explore More
               <span aria-hidden="true">&rarr;</span>
             </button>
+
+            {showExploreLess && (
+              <button
+                type="button"
+                onClick={handleExploreLess}
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                Explore Less
+                <span aria-hidden="true">&uarr;</span>
+              </button>
+            )}
           </motion.div>
         )}
       </div>

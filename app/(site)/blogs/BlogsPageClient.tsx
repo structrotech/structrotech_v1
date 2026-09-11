@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { BlogCard } from "@/components/BlogCard";
 import { SearchField } from "@/components/SearchField";
@@ -8,7 +8,6 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { BlogListPost } from "@/lib/sanity-mappers";
 import { sortPosts } from "@/lib/sort";
-import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -21,7 +20,8 @@ import {
 import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/motion";
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
-const MOBILE_CARD_LIMIT = 5;
+const INITIAL_VISIBLE = 8;
+const STEP = 3;
 
 function filterPosts(posts: BlogListPost[], searchQuery: string, activeCategory: string) {
   let result = posts;
@@ -47,7 +47,13 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState("Latest");
-  const [visibleCount, setVisibleCount] = useState(6);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [hasExploredAll, setHasExploredAll] = useState(false);
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE);
+    setHasExploredAll(false);
+  }, [searchQuery, activeCategory, sortBy]);
 
   const categoryTabs = useMemo(() => {
     const titles = [...new Set(initialPosts.map((p) => p.category).filter(Boolean))];
@@ -61,7 +67,29 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
   }, [initialPosts, searchQuery, activeCategory, sortBy]);
 
   const visiblePosts = filteredPosts.slice(0, visibleCount);
+  const canToggle = filteredPosts.length > INITIAL_VISIBLE;
   const hasMore = visibleCount < filteredPosts.length;
+  const showExploreLess = hasExploredAll && visibleCount > INITIAL_VISIBLE;
+
+  const handleExploreMore = () => {
+    const next = visibleCount + STEP;
+    if (next >= filteredPosts.length) {
+      setVisibleCount(filteredPosts.length);
+      setHasExploredAll(true);
+    } else {
+      setVisibleCount(next);
+    }
+  };
+
+  const handleExploreLess = () => {
+    const next = visibleCount - STEP;
+    if (next <= INITIAL_VISIBLE) {
+      setVisibleCount(INITIAL_VISIBLE);
+      setHasExploredAll(false);
+    } else {
+      setVisibleCount(next);
+    }
+  };
 
   return (
     <div className={pageShell}>
@@ -88,7 +116,7 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {visiblePosts.map((post, index) => (
-              <div key={post.slug} className={cn(index >= 5 && "hidden md:block")}>
+              <div key={post.slug}>
                 <BlogCard
                   title={post.title}
                   slug={post.slug}
@@ -109,16 +137,28 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
           </div>
         )}
 
-        {hasMore && (
-          <motion.div {...fadeUpInViewProps(0)} className="mt-10 text-center">
+        {canToggle && (
+          <motion.div {...fadeUpInViewProps(0)} className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <button
               type="button"
-              onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              disabled={!hasMore}
+              onClick={handleExploreMore}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-primary"
             >
               Explore More
               <span aria-hidden="true">&rarr;</span>
             </button>
+
+            {showExploreLess && (
+              <button
+                type="button"
+                onClick={handleExploreLess}
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                Explore Less
+                <span aria-hidden="true">&uarr;</span>
+              </button>
+            )}
           </motion.div>
         )}
       </div>

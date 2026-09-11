@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { InterestingTrickCard } from "@/components/InterestingTrickCard";
 import { SearchField } from "@/components/SearchField";
@@ -8,7 +8,6 @@ import { FilterTabs } from "@/components/FilterTabs";
 import { SortSelect } from "@/components/SortSelect";
 import type { TrickListItem } from "@/lib/sanity-mappers";
 import { sortTricks } from "@/lib/sort";
-import { cn } from "@/lib/utils";
 import {
   pageContainer,
   pageShell,
@@ -22,7 +21,7 @@ import { fadeUpMountProps, fadeUpInViewProps, listStaggerDelay } from "@/lib/mot
 
 const sortOptions = ["Latest", "Oldest", "Most Popular", "Beginner Friendly", "A-Z"];
 const INITIAL_VISIBLE = 8;
-const MOBILE_CARD_LIMIT = 5;
+const STEP = 3;
 
 function filterTricks(tricks: TrickListItem[], searchQuery: string, activeCategory: string) {
   let result = tricks;
@@ -51,6 +50,12 @@ export default function InterestingTricksPageClient({
   const [activeCategory, setActiveCategory] = useState("All");
   const [sortBy, setSortBy] = useState("Latest");
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
+  const [hasExploredAll, setHasExploredAll] = useState(false);
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE);
+    setHasExploredAll(false);
+  }, [searchQuery, activeCategory, sortBy]);
 
   const trickCategories = useMemo(() => {
     const categories = [...new Set(initialTricks.map((t) => t.category).filter(Boolean))];
@@ -64,7 +69,29 @@ export default function InterestingTricksPageClient({
   }, [initialTricks, searchQuery, activeCategory, sortBy]);
 
   const visibleTricks = filteredTricks.slice(0, visibleCount);
+  const canToggle = filteredTricks.length > INITIAL_VISIBLE;
   const hasMore = visibleCount < filteredTricks.length;
+  const showExploreLess = hasExploredAll && visibleCount > INITIAL_VISIBLE;
+
+  const handleExploreMore = () => {
+    const next = visibleCount + STEP;
+    if (next >= filteredTricks.length) {
+      setVisibleCount(filteredTricks.length);
+      setHasExploredAll(true);
+    } else {
+      setVisibleCount(next);
+    }
+  };
+
+  const handleExploreLess = () => {
+    const next = visibleCount - STEP;
+    if (next <= INITIAL_VISIBLE) {
+      setVisibleCount(INITIAL_VISIBLE);
+      setHasExploredAll(false);
+    } else {
+      setVisibleCount(next);
+    }
+  };
 
   return (
     <div className={pageShell}>
@@ -91,7 +118,7 @@ export default function InterestingTricksPageClient({
             className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           >
             {visibleTricks.map((trick, index) => (
-              <div key={trick.id} className={cn(index >= 5 && "hidden md:block")}>
+              <div key={trick.id}>
                 <InterestingTrickCard
                   index={index + 1}
                   question={trick.question}
@@ -109,16 +136,28 @@ export default function InterestingTricksPageClient({
           </div>
         )}
 
-        {hasMore && (
-          <motion.div {...fadeUpInViewProps(0)} className="mt-10 text-center">
+        {canToggle && (
+          <motion.div {...fadeUpInViewProps(0)} className="mt-10 flex flex-wrap items-center justify-center gap-4">
             <button
               type="button"
-              onClick={() => setVisibleCount((prev) => prev + 6)}
-              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              disabled={!hasMore}
+              onClick={handleExploreMore}
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-primary"
             >
               Explore More
               <span aria-hidden="true">&rarr;</span>
             </button>
+
+            {showExploreLess && (
+              <button
+                type="button"
+                onClick={handleExploreLess}
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-primary px-6 py-3 font-medium text-primary transition-colors hover:bg-primary hover:text-primary-foreground"
+              >
+                Explore Less
+                <span aria-hidden="true">&uarr;</span>
+              </button>
+            )}
           </motion.div>
         )}
       </div>
