@@ -6,6 +6,7 @@ import { client } from "@/sanity/client";
 import { CATEGORIES_QUERY, FEATURED_TRICKS_QUERY, POSTS_QUERY, RESOURCES_QUERY } from "@/sanity/queries";
 import { mapSanityTrick, mapSanityPostForCard, mapSanityResource } from "@/lib/sanity-mappers";
 import { HeroSection } from "@/components/HeroSection";
+import { RecentBlogsSection } from "@/components/RecentBlogsSection";
 import { CategoriesSection } from "@/components/CategoriesSection";
 import type { Metadata } from "next";
 import { pageMetadata } from "@/lib/seo";
@@ -15,13 +16,13 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    title: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
     description:
       "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
     path: "/",
   }),
   title: {
-    absolute: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    absolute: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
   },
 };
 
@@ -56,9 +57,24 @@ export default async function Home() {
     resources = FALLBACK_RESOURCES.map(mapSanityResource);
   }
 
+  const getEffectiveDate = (post: { updatedAt?: string; publishedAt?: string }) => {
+    const updatedTime = post.updatedAt ? new Date(post.updatedAt).getTime() : 0;
+    const publishedTime = post.publishedAt ? new Date(post.publishedAt).getTime() : 0;
+    return Math.max(
+      Number.isNaN(updatedTime) ? 0 : updatedTime,
+      Number.isNaN(publishedTime) ? 0 : publishedTime
+    );
+  };
+
+  const recentBlogs = [...posts].sort(
+    (a, b) => getEffectiveDate(b) - getEffectiveDate(a)
+  );
+
   return (
     <div className="min-h-screen w-full">
       <HeroSection />
+
+      <RecentBlogsSection blogs={recentBlogs} />
 
       <div className={pageContainer} aria-hidden="true">
         <hr

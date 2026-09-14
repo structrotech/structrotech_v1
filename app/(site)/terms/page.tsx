@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | StructroTech",
-  description: "Terms and conditions governing your use of the StructroTech platform.",
+  title: "Terms of Service | StructroLearn",
+  description: "Terms and conditions governing your use of the StructroLearn platform.",
 };
 
 const lastUpdated = "May 24, 2026";
@@ -15,7 +15,7 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          These Terms of Service (&quot;Terms&quot;) govern your access to and use of StructroTech,
+          These Terms of Service (&quot;Terms&quot;) govern your access to and use of StructroLearn,
           a personal project and brand, including its website, content, and related services (collectively, the &quot;Service&quot;). By accessing or
           using the Service, you agree to be bound by these Terms and our Privacy Policy.
         </p>
@@ -32,7 +32,7 @@ const sections: LegalSection[] = [
     content: (
       <p>
         You must be at least 13 years old (or the minimum age required in your jurisdiction) to use
-        the Service. Users under 18 should use StructroTech with parental or guardian supervision
+        the Service. Users under 18 should use StructroLearn with parental or guardian supervision
         where required by local law.
       </p>
     ),
@@ -58,13 +58,13 @@ const sections: LegalSection[] = [
     title: "Permitted Use",
     content: (
       <>
-        <p>StructroTech grants you a limited, non-exclusive, non-transferable license to access and use the Service for personal, non-commercial learning, unless otherwise agreed in writing.</p>
+        <p>StructroLearn grants you a limited, non-exclusive, non-transferable license to access and use the Service for personal, non-commercial learning, unless otherwise agreed in writing.</p>
         <p>You agree not to:</p>
         <ul>
           <li>Copy, scrape, or redistribute content without permission.</li>
           <li>Reverse engineer, interfere with, or disrupt the Service or its infrastructure.</li>
           <li>Upload malware, spam, or unlawful material.</li>
-          <li>Impersonate others or misrepresent your affiliation with StructroTech.</li>
+          <li>Impersonate others or misrepresent your affiliation with StructroLearn.</li>
           <li>Use the Service in violation of applicable laws or third-party rights.</li>
         </ul>
       </>
@@ -76,8 +76,8 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          All content on StructroTech—including text, graphics, logos, roadmaps, cheatsheets, and
-          software—is owned by StructroTech or its licensors and protected by copyright and other
+          All content on StructroLearn—including text, graphics, logos, roadmaps, cheatsheets, and
+          software—is owned by StructroLearn or its licensors and protected by copyright and other
           intellectual property laws.
         </p>
         <p>
@@ -94,7 +94,7 @@ const sections: LegalSection[] = [
       <>
         <p>
           If you submit comments, feedback, or other materials (&quot;User Content&quot;), you grant
-          StructroTech a worldwide, royalty-free license to use, display, and improve the Service
+          StructroLearn a worldwide, royalty-free license to use, display, and improve the Service
           based on that content. You retain ownership of your User Content and represent that you
           have the right to submit it.
         </p>
@@ -107,7 +107,7 @@ const sections: LegalSection[] = [
     title: "Third-Party Links and Tools",
     content: (
       <p>
-        The Service may link to third-party websites, tools, or resources. StructroTech does not
+        The Service may link to third-party websites, tools, or resources. StructroLearn does not
         control and is not responsible for third-party content, privacy practices, or availability.
         Your use of third-party services is at your own risk.
       </p>
@@ -131,7 +131,7 @@ const sections: LegalSection[] = [
     title: "Limitation of Liability",
     content: (
       <p>
-        TO THE MAXIMUM EXTENT PERMITTED BY LAW, STRUCTROTECH AND ITS AFFILIATES SHALL NOT BE LIABLE
+        TO THE MAXIMUM EXTENT PERMITTED BY LAW, STRUCTROLEARN AND ITS AFFILIATES SHALL NOT BE LIABLE
         FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF
         PROFITS, DATA, OR GOODWILL, ARISING FROM YOUR USE OF THE SERVICE. OUR TOTAL LIABILITY FOR
         ANY CLAIM SHALL NOT EXCEED THE GREATER OF (A) AMOUNTS YOU PAID US IN THE TWELVE MONTHS
@@ -144,7 +144,7 @@ const sections: LegalSection[] = [
     title: "Indemnification",
     content: (
       <p>
-        You agree to indemnify and hold harmless StructroTech, its officers, employees, and partners
+        You agree to indemnify and hold harmless StructroLearn, its officers, employees, and partners
         from claims, damages, and expenses (including reasonable attorneys&apos; fees) arising from your
         use of the Service, violation of these Terms, or infringement of third-party rights.
       </p>
@@ -190,7 +190,7 @@ export default function TermsPage() {
   return (
     <LegalPage
       title="Terms of Service"
-      description="The rules and guidelines for using StructroTech responsibly."
+      description="The rules and guidelines for using StructroLearn responsibly."
       lastUpdated={lastUpdated}
       sections={sections}
     />

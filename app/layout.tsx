@@ -14,8 +14,8 @@ const FORCE_REVEAL_SCRIPT = `window.__fmRevealTimer=window.setTimeout(function()
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "StructroTech - Learn AI, Cybersecurity, Linux & More",
-    template: "%s | StructroTech",
+    default: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
+    template: "%s | StructroLearn",
   },
   description:
     "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
@@ -26,14 +26,14 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE_NAME,
     url: "/",
-    title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    title: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
     description:
       "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "StructroTech - Learn AI, Cybersecurity, Linux & More",
+    title: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
     description:
       "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
     images: [DEFAULT_OG_IMAGE],

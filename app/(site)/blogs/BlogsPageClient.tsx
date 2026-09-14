@@ -113,7 +113,7 @@ export default function BlogsPageClient({ initialPosts }: { initialPosts: BlogLi
         {visiblePosts.length > 0 ? (
           <div
             key={`${activeCategory}-${sortBy}-${searchQuery}`}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
           >
             {visiblePosts.map((post, index) => (
               <div key={post.slug}>

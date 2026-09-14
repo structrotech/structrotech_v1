@@ -17,7 +17,7 @@ export function StatusScreen({
         <div className="w-full max-w-lg rounded-2xl border border-border bg-card/50 p-8 text-center backdrop-blur-sm">
           <Link href="/" className="mb-6 inline-flex items-center gap-0">
             <span className="text-2xl font-bold text-foreground">Structro</span>
-            <span className="text-2xl font-bold text-primary">Tech</span>
+            <span className="text-2xl font-bold text-primary">Learn</span>
           </Link>
           <h1 className="mb-3 text-2xl font-bold text-foreground">{title}</h1>
           <p className="mb-8 text-sm leading-relaxed text-muted-foreground">{description}</p>

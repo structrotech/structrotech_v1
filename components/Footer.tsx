@@ -47,11 +47,11 @@ export function Footer() {
           <div className="flex flex-col items-center sm:items-start">
             <Link href="/" className="mb-3 inline-block font-sans text-lg md:text-xl font-bold leading-none">
               <span className="text-foreground dark:text-white">Structro</span>
-              <span className="text-primary">Tech</span>
+              <span className="text-primary">Learn</span>
             </Link>
             <p className="mb-4 max-w-xs text-[13px] sm:text-sm font-normal leading-relaxed text-muted-foreground">
               Your trusted learning companion for technology. Learn, build and grow
-              with StructroTech.
+              with StructroLearn.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-2.5 sm:justify-start">
               {socialLinks.map((link) => (
@@ -127,7 +127,7 @@ export function Footer() {
 
         <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-black/[0.05] pt-6 text-center dark:border-white/[0.05] md:flex-row md:text-left">
           <p className="text-xs sm:text-[13px] font-normal text-muted-foreground">
-            &copy; 2026 StructroTech. All rights reserved.
+            &copy; 2026 StructroLearn. All rights reserved.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-5 text-xs sm:text-[13px] font-normal text-muted-foreground md:justify-end">
             <Link href="/privacy" className="transition-colors hover:text-primary">

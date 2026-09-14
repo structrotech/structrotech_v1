@@ -21,7 +21,7 @@ export function NotFoundView() {
             Page not found
           </h1>
           <p className="mx-auto mt-4 max-w-md text-[16px] leading-relaxed text-muted-foreground md:text-[17px]">
-            This URL does not match any page on StructroTech. It may have been moved,
+            This URL does not match any page on StructroLearn. It may have been moved,
             unpublished, or typed incorrectly.
           </p>
 

@@ -6,4 +6,4 @@ export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://structrotech.com"
 ).replace(/\/$/, "");
 
-export const SITE_NAME = "StructroTech";
+export const SITE_NAME = "StructroLearn";

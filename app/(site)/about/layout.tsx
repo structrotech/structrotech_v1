@@ -4,7 +4,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "About Us",
   description:
-    "Learn about StructroTech — our mission, values, and commitment to simple, structured technology education.",
+    "Learn about StructroLearn — our mission, values, and commitment to simple, structured technology education.",
   path: "/about",
 });
 

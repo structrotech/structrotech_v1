@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/LegalPage";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | StructroTech",
-  description: "How StructroTech collects, uses, and protects your personal information.",
+  title: "Privacy Policy | StructroLearn",
+  description: "How StructroLearn collects, uses, and protects your personal information.",
 };
 
 const lastUpdated = "May 24, 2026";
@@ -15,12 +15,12 @@ const sections: LegalSection[] = [
     content: (
       <>
         <p>
-          StructroTech (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is a personal project and learning platform. This Privacy Policy explains how we collect, use, disclose, and
+          StructroLearn (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) is a personal project and learning platform. This Privacy Policy explains how we collect, use, disclose, and
           safeguard your information when you visit our site, subscribe to our newsletter, or
           use our services.
         </p>
         <p>
-          By using StructroTech, you agree to the practices described in this policy. If you do
+          By using StructroLearn, you agree to the practices described in this policy. If you do
           not agree, please discontinue use of our services.
         </p>
       </>
@@ -156,7 +156,7 @@ const sections: LegalSection[] = [
     title: "Children's Privacy",
     content: (
       <p>
-        StructroTech is not directed to children under 13 (or the minimum age in your region). We do
+        StructroLearn is not directed to children under 13 (or the minimum age in your region). We do
         not knowingly collect personal information from children. If you believe a child has provided
         us data, contact us and we will delete it promptly.
       </p>
@@ -179,7 +179,7 @@ export default function PrivacyPage() {
   return (
     <LegalPage
       title="Privacy Policy"
-      description="Learn how StructroTech handles your data with transparency and care."
+      description="Learn how StructroLearn handles your data with transparency and care."
       lastUpdated={lastUpdated}
       sections={sections}
     />

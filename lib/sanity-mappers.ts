@@ -2,7 +2,7 @@ import { resolveSanityImageUrl } from "@/sanity/client";
 import type { Author, Resource } from "@/types/sanity";
 
 export const defaultAuthor: Author = {
-  name: "StructroTech",
+  name: "StructroLearn",
   slug: "structro-tech",
   avatar: "/placeholder-user.jpg",
   bio: "",
@@ -16,6 +16,7 @@ export type BlogListPost = {
   category: string;
   categorySlug: string;
   publishedAt: string;
+  updatedAt?: string;
   readTime: number;
   excerpt: string;
   featured: boolean;
@@ -63,6 +64,9 @@ export function mapSanityAuthor(raw: {
 }
 
 export function mapSanityPostForCard(raw: {
+  _id?: string;
+  _updatedAt?: string;
+  _createdAt?: string;
   title: string;
   slug?: { current?: string };
   coverImage?: unknown;
@@ -80,7 +84,8 @@ export function mapSanityPostForCard(raw: {
     author: mapSanityAuthor(raw.author ?? null),
     category: raw.category?.title ?? "",
     categorySlug: raw.category?.slug?.current ?? "",
-    publishedAt: raw.publishedAt ?? "",
+    publishedAt: raw.publishedAt ?? raw._createdAt ?? "",
+    updatedAt: raw._updatedAt ?? raw.publishedAt ?? "",
     readTime: raw.readTime ?? 5,
     excerpt: raw.excerpt ?? "",
     featured: raw.featured ?? false,

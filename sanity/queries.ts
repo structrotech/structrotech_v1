@@ -18,6 +18,8 @@ export const CATEGORIES_QUERY = groq`
 export const POSTS_QUERY = groq`
   *[_type == "post"] | order(coalesce(displayOrder, 999999) asc, publishedAt desc) {
     _id,
+    _updatedAt,
+    _createdAt,
     title,
     slug,
     coverImage,

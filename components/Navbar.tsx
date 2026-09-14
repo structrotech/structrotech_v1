@@ -58,7 +58,7 @@ export function Navbar() {
               <span className="text-lg font-bold text-foreground md:text-xl dark:text-white">
                 Structro
               </span>
-              <span className="text-lg font-bold text-primary md:text-xl">Tech</span>
+              <span className="text-lg font-bold text-primary md:text-xl">Learn</span>
             </Link>
 
             <div className="hidden md:flex flex-1 items-center justify-center gap-6 lg:gap-8">

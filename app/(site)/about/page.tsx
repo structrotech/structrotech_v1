@@ -103,7 +103,7 @@ export default function AboutPage() {
     <div className={pageShell}>
       <div className={pageContainer}>
         <motion.section {...fadeUpMountProps(0)} className={`${pageHeaderBlock} md:mb-16`}>
-          <h1 className={pageTitle}>About StructroTech</h1>
+          <h1 className={pageTitle}>About StructroLearn</h1>
           <p className={pageSubtitle}>
             We believe that quality tech education should be accessible to everyone. Our
             mission is to provide clear, structured, and practical learning resources for
