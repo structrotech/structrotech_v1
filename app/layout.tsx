@@ -14,11 +14,11 @@ const FORCE_REVEAL_SCRIPT = `window.__fmRevealTimer=window.setTimeout(function()
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
+    default: "StructroLearn",
     template: "%s | StructroLearn",
   },
   description:
-    "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+    "We make evolving technologies and complex concepts simple, structured, and organized.",
   alternates: {
     canonical: "/",
   },
@@ -26,16 +26,16 @@ export const metadata: Metadata = {
     type: "website",
     siteName: SITE_NAME,
     url: "/",
-    title: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
+    title: "StructroLearn",
     description:
-      "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+      "We make evolving technologies and complex concepts simple, structured, and organized.",
     images: [DEFAULT_OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
-    title: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
+    title: "StructroLearn",
     description:
-      "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+      "We make evolving technologies and complex concepts simple, structured, and organized.",
     images: [DEFAULT_OG_IMAGE],
   },
   generator: "Next.js",

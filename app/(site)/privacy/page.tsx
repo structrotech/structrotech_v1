@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/LegalPage";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | StructroLearn",
+export const metadata: Metadata = pageMetadata({
+  title: "Privacy Policy",
   description: "How StructroLearn collects, uses, and protects your personal information.",
-};
+  path: "/privacy",
+});
 
 const lastUpdated = "May 24, 2026";
 

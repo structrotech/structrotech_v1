@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { LegalPage, type LegalSection } from "@/components/LegalPage";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | StructroLearn",
+export const metadata: Metadata = pageMetadata({
+  title: "Terms of Service",
   description: "Terms and conditions governing your use of the StructroLearn platform.",
-};
+  path: "/terms",
+});
 
 const lastUpdated = "May 24, 2026";
 

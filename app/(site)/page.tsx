@@ -16,13 +16,13 @@ export const revalidate = 60;
 
 export const metadata: Metadata = {
   ...pageMetadata({
-    title: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
+    title: "StructroLearn",
     description:
-      "Your trusted learning companion for AI, Cybersecurity, Linux, Networking, Web Development and more. Simple, structured learning.",
+      "We make evolving technologies and complex concepts simple, structured, and organized.",
     path: "/",
   }),
   title: {
-    absolute: "StructroLearn - Learn AI, Cybersecurity, Linux & More",
+    absolute: "StructroLearn",
   },
 };
 

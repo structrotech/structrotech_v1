@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
@@ -11,6 +12,8 @@ import {
 import { mapSanityCategory, mapSanityPostForCard } from "@/lib/sanity-mappers";
 import { pageContainer } from "@/lib/layout";
 import { FALLBACK_CATEGORIES, FALLBACK_POSTS } from "@/lib/fallback-data";
+import { SITE_NAME } from "@/lib/site";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 
 export const revalidate = 60;
 
@@ -23,6 +26,53 @@ export async function generateStaticParams() {
   return categories
     .filter((c) => c.slug)
     .map((c) => ({ slug: c.slug! }));
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  let categoryRaw = null;
+  try {
+    categoryRaw = await client.fetch(CATEGORY_QUERY, { slug });
+  } catch (err) {
+    console.error("Sanity metadata fetch error on category detail:", err);
+  }
+
+  if (!categoryRaw) {
+    categoryRaw = FALLBACK_CATEGORIES.find((c) => c.slug.current === slug) || null;
+  }
+
+  if (!categoryRaw) return {};
+
+  const category = mapSanityCategory(categoryRaw);
+  const title = category.title;
+  const description =
+    category.description ||
+    `Browse educational articles, guides, and practical tutorials in ${category.title} on StructroLearn.`;
+  const canonicalPath = `/categories/${slug}`;
+  const ogImage = category.image || DEFAULT_OG_IMAGE;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: canonicalPath,
+    },
+    openGraph: {
+      type: "website",
+      url: canonicalPath,
+      siteName: SITE_NAME,
+      title,
+      description,
+      images: [ogImage],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
+    },
+  };
 }
 
 export default async function CategoryDetailPage({ params }: PageProps) {

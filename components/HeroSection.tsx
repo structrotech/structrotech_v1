@@ -16,22 +16,15 @@ export function HeroSection() {
         <motion.div {...fadeUpMountProps(0)} className="w-full">
           <h1 className="font-serif w-full text-center text-[clamp(40px,5vw,72px)] font-semibold leading-[1.1] tracking-normal text-foreground mb-5">
             Welcome to{" "}
-            <span className="text-primary">StructroLearn</span>
+            <span className="text-primary">StructroTech</span>
           </h1>
         </motion.div>
 
         <motion.p
           {...fadeUpMountProps(0.1)}
-          className="w-full text-center text-[17px] md:text-[18px] font-light text-muted-foreground mb-3 max-w-[500px] mx-auto leading-relaxed"
+          className="w-full text-center text-[17px] md:text-[18px] font-light text-muted-foreground mb-8 max-w-[540px] mx-auto leading-relaxed"
         >
-          Simple, structured learning.
-        </motion.p>
-
-        <motion.p
-          {...fadeUpMountProps(0.2)}
-          className="w-full text-center text-[17px] md:text-[18px] font-light text-muted-foreground mb-8 max-w-[500px] mx-auto leading-relaxed"
-        >
-          Learn AI, Cybersecurity, Linux, Networking, Web Development and more.
+          We make evolving tech and complex tech concepts simple, structured, and organized.
         </motion.p>
 
         <motion.div
