@@ -16,7 +16,7 @@ export function HeroSection() {
         <motion.div {...fadeUpMountProps(0)} className="w-full">
           <h1 className="font-serif w-full text-center text-[clamp(40px,5vw,72px)] font-semibold leading-[1.1] tracking-normal text-foreground mb-5">
             Welcome to{" "}
-            <span className="text-primary">StructroTech</span>
+            <span className="text-primary">StructroLearn</span>
           </h1>
         </motion.div>
 
