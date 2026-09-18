@@ -10,46 +10,85 @@ export const postSchema = {
         name: 'title',
         title: 'Title',
         type: 'string',
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'slug',
         title: 'Slug',
         type: 'slug',
-        options: { source: 'title' }
+        options: { source: 'title' },
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'coverImage',
         title: 'Cover Image',
         type: 'image',
-        options: { hotspot: true }
+        options: { hotspot: true },
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'excerpt',
         title: 'Short Description',
         type: 'text',
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'body',
         title: 'Blog Content',
         type: 'array',
-        of: [{ type: 'block' }, bodyImage, ...pageBuilderBlockRefs]
+        of: [{ type: 'block' }, bodyImage, ...pageBuilderBlockRefs],
+        validation: (Rule: any) => Rule.required().min(1),
+      },
+      {
+        name: 'lineSpacing',
+        title: 'Line Spacing (Line Height)',
+        description: 'Line height for blog text (default: Normal)',
+        type: 'string',
+        options: {
+          list: [
+            { title: 'Normal (Default)', value: 'normal' },
+            { title: 'Relaxed (Spacious)', value: 'relaxed' },
+            { title: 'Loose (Extra spacious)', value: 'loose' },
+            { title: 'Tight (Compact)', value: 'tight' },
+          ],
+          layout: 'radio',
+        },
+        initialValue: 'normal',
+      },
+      {
+        name: 'letterSpacing',
+        title: 'Letter Spacing',
+        description: 'Character spacing for blog text (default: Normal)',
+        type: 'string',
+        options: {
+          list: [
+            { title: 'Normal (Default)', value: 'normal' },
+            { title: 'Wide (Airy)', value: 'wide' },
+            { title: 'Tight (Compact)', value: 'tight' },
+          ],
+          layout: 'radio',
+        },
+        initialValue: 'normal',
       },
       {
         name: 'category',
         title: 'Category',
         type: 'reference',
-        to: [{ type: 'category' }]
+        to: [{ type: 'category' }],
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'author',
         title: 'Author',
         type: 'reference',
-        to: [{ type: 'author' }]
+        to: [{ type: 'author' }],
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'publishedAt',
         title: 'Published Date',
         type: 'datetime',
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'readTime',
@@ -110,5 +149,8 @@ export const postSchema = {
         of: [{ type: 'reference', to: [{ type: 'post' }] }],
         validation: (Rule: any) => Rule.max(3),
       }
-    ]
+    ],
+    preview: {
+      select: { title: 'title', subtitle: 'category.title', media: 'coverImage' },
+    },
   }

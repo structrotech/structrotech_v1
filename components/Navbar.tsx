@@ -43,7 +43,7 @@ export function Navbar() {
       <header className="fixed top-3 left-0 right-0 z-50 w-full px-4">
         <nav
           className={cn(
-            "mx-auto max-w-[1400px] rounded-full border backdrop-blur-xl shadow-lg overflow-hidden",
+            "mx-auto max-w-[1400px] rounded-full border backdrop-blur-xl shadow-lg",
             "bg-[#f5f0eb]/95 border-black/10",
             "dark:bg-[#0f1117]/80 dark:border-white/10"
           )}

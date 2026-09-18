@@ -3,8 +3,19 @@ export const resourceSchema = {
   title: 'Resource',
   type: 'document',
   fields: [
-    { name: 'title', title: 'Title', type: 'string' },
-    { name: 'slug', title: 'Slug', type: 'slug', options: { source: 'title' } },
+    {
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule: any) => Rule.required(),
+    },
+    {
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      options: { source: 'title' },
+      validation: (Rule: any) => Rule.required(),
+    },
     {
       name: 'type',
       title: 'Type',
@@ -12,10 +23,16 @@ export const resourceSchema = {
       options: {
         list: ['Roadmaps', 'Cheatsheets', 'Notes', 'Guides', 'Tools'],
       },
+      validation: (Rule: any) => Rule.required(),
     },
     { name: 'image', title: 'Cover Image', type: 'image', options: { hotspot: true } },
     { name: 'description', title: 'Description', type: 'text' },
-    { name: 'downloadUrl', title: 'Download URL', type: 'url' },
+    {
+      name: 'downloadUrl',
+      title: 'Download URL',
+      type: 'url',
+      validation: (Rule: any) => Rule.required(),
+    },
     {
       name: 'author',
       title: 'Author',

@@ -6,7 +6,7 @@ import { fadeUpInViewProps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
 const baseCardClass =
-  "group flex h-full flex-col justify-between rounded-2xl border border-border/90 bg-card shadow-[0_6px_28px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-300 hover:border-primary/50 hover:shadow-[0_10px_36px_rgba(139,92,246,0.18)] hover:-translate-y-1 dark:bg-[#151820] dark:border-white/10 dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] dark:ring-1 dark:ring-white/[0.06] dark:hover:border-primary/50 dark:hover:-translate-y-[2px] dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.65),0_0_16px_rgba(139,92,246,0.25)]";
+  "group flex h-full flex-col justify-between rounded-[22px] sm:rounded-[24px] overflow-hidden bg-white border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.05),0_1px_2px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.09),0_2px_6px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 dark:bg-[#1c1c1e] dark:border-white/[0.08] dark:shadow-[0_4px_24px_rgba(0,0,0,0.4)] dark:hover:border-white/20 dark:hover:shadow-[0_12px_36px_rgba(0,0,0,0.65)]";
 
 const sizeClass: Record<NonNullable<InterestingTrickCardProps["size"]>, string> =
   {

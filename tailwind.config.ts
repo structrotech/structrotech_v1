@@ -10,7 +10,8 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-manrope)", "Manrope", "sans-serif"],
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
       },
       colors: {
         background: "var(--background)",

@@ -3,12 +3,18 @@ export const downloadCardSchema = {
   title: 'Download Card',
   type: 'object',
   fields: [
-    { name: 'title', title: 'Title', type: 'string' },
+    {
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      validation: (Rule: any) => Rule.required(),
+    },
     { name: 'description', title: 'Description', type: 'text' },
     {
       name: 'file',
       title: 'File (PDF / document)',
       type: 'file',
+      validation: (Rule: any) => Rule.required(),
     },
   ],
   preview: {

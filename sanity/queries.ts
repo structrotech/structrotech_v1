@@ -55,6 +55,8 @@ export const POST_QUERY = groq`
     seoTitle,
     seoDescription,
     monetization,
+    lineSpacing,
+    letterSpacing,
     category-> {
       title,
       slug
@@ -160,7 +162,7 @@ export const TRICKS_QUERY = groq`
 `
 
 export const FEATURED_TRICKS_QUERY = groq`
-  *[_type == "interestingTrick" && featuredOnHome == true] | order(coalesce(displayOrder, homeOrder, 999999) asc, publishedAt desc) {
+  *[_type == "interestingTrick"] | order(featuredOnHome desc, coalesce(displayOrder, homeOrder, 999999) asc, publishedAt desc)[0...8] {
     _id,
     question,
     slug,
@@ -201,6 +203,8 @@ export const TRICK_QUERY = groq`
     seoTitle,
     seoDescription,
     monetization,
+    lineSpacing,
+    letterSpacing,
     author-> {
       name,
       slug,

@@ -7,12 +7,14 @@ export const categorySchema = {
         name: 'title',
         title: 'Category Name',
         type: 'string',
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'slug',
         title: 'Slug',
         type: 'slug',
-        options: { source: 'title' }
+        options: { source: 'title' },
+        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'image',
@@ -44,5 +46,8 @@ export const categorySchema = {
         description: 'Optional. Lower number appears first (1, 2, 3…). Leave empty to keep the default order.',
         type: 'number',
       }
-    ]
+    ],
+    preview: {
+      select: { title: 'title', subtitle: 'tag', media: 'image' },
+    },
   }

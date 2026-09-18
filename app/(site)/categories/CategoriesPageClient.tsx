@@ -20,8 +20,8 @@ import { fadeUpMountProps, listStaggerDelay } from "@/lib/motion";
 
 const categoryTabs = ["All", "Tech", "AI", "Cybersecurity", "Cloud", "DevOps"];
 const sortOptions = ["Default", "Most Articles", "A-Z", "Z-A"];
-const INITIAL_VISIBLE = 6;
-const STEP = 3;
+const INITIAL_VISIBLE = 8;
+const STEP = 4;
 
 function filterCategories(categories: CategoryListItem[], searchQuery: string, activeTab: string) {
   let result = categories;

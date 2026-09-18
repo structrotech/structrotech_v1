@@ -112,6 +112,44 @@ const sections: LegalSection[] = [
     ),
   },
   {
+    id: "advertising",
+    title: "Advertising and Google AdSense",
+    content: (
+      <>
+        <p>
+          We may display advertisements served by Google AdSense or other third-party advertising partners to support our platform.
+        </p>
+        <p>
+          Third-party vendors, including Google, use cookies to serve ads based on a user&apos;s prior visits to our
+          website or other websites on the Internet. Google&apos;s use of advertising cookies enables it and its
+          partners to serve ads to our users based on their visits to StructroLearn and/or other sites on the Internet.
+        </p>
+        <p>
+          Users may opt out of personalized advertising by visiting{" "}
+          <a
+            href="https://www.google.com/settings/ads"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-primary"
+          >
+            Google Ads Settings
+          </a>
+          . Alternatively, you can opt out of a third-party vendor&apos;s use of cookies for personalized
+          advertising by visiting{" "}
+          <a
+            href="https://www.aboutads.info/choices/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline text-primary"
+          >
+            www.aboutads.info
+          </a>
+          .
+        </p>
+      </>
+    ),
+  },
+  {
     id: "retention",
     title: "Data Retention",
     content: (

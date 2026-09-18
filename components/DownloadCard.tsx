@@ -9,7 +9,7 @@ interface DownloadCardProps {
 
 export function DownloadCard({ title, description, fileUrl, fileExt }: DownloadCardProps) {
   return (
-    <div className="flex flex-col rounded-2xl border border-border bg-card/50 backdrop-blur-sm p-5 dark:bg-[#151820] dark:border-white/10 dark:shadow-[0_4px_24px_rgba(0,0,0,0.5)] dark:ring-1 dark:ring-white/[0.06]">
+    <div className="flex flex-col rounded-[22px] sm:rounded-[24px] border border-black/[0.06] bg-white shadow-[0_4px_20px_rgba(0,0,0,0.05),0_1px_2px_rgba(0,0,0,0.03)] p-5 sm:p-6 dark:bg-[#1c1c1e] dark:border-white/[0.08] dark:shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
       <div className="flex items-center gap-3 mb-3">
         <div className="p-2.5 rounded-xl bg-primary/10">
           <FileText className="w-5 h-5 text-primary" />

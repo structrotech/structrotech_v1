@@ -208,6 +208,8 @@ export default async function SingleTrickPage({ params }: PageProps) {
       tricksContent={tricksContent}
       relatedBlogsContent={relatedBlogsContent}
       monetization={trick.monetization}
+      lineSpacing={trick.lineSpacing}
+      letterSpacing={trick.letterSpacing}
     />
     </>
   );

@@ -213,6 +213,8 @@ export default async function SingleBlogPage({ params }: PageProps) {
       tricksContent={tricksContent}
       relatedBlogsContent={relatedBlogsContent}
       monetization={post.monetization}
+      lineSpacing={post.lineSpacing}
+      letterSpacing={post.letterSpacing}
     />
     </>
   );

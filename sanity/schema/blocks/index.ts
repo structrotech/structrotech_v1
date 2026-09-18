@@ -2,6 +2,8 @@ import { affiliateBoxBlock } from './affiliateBox'
 import { sponsorBannerBlock } from './sponsorBanner'
 import { downloadBoxBlock } from './downloadBox'
 import { adSensePlaceholderBlock } from './adSensePlaceholder'
+import { codeBlock } from './codeBlock'
+import { dividerBlock } from './divider'
 
 /**
  * In-body blocks an editor can insert anywhere in the article.
@@ -12,6 +14,8 @@ export const pageBuilderBlockSchemas = [
   sponsorBannerBlock,
   downloadBoxBlock,
   adSensePlaceholderBlock,
+  codeBlock,
+  dividerBlock,
 ]
 
 /** References spread into a Portable Text array's `of` to allow inserting blocks anywhere. */
