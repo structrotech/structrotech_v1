@@ -32,7 +32,18 @@ export function ThemeToggle() {
     }
   };
 
+  useEffect(() => {
+    if (!showTooltip) return;
+    const autoDismissTimer = setTimeout(() => {
+      dismissTooltip();
+    }, 5000);
+    return () => clearTimeout(autoDismissTimer);
+  }, [showTooltip]);
+
   const handleToggle = () => {
+    if (showTooltip) {
+      dismissTooltip();
+    }
     setTheme(theme === "dark" ? "light" : "dark");
   };
 
