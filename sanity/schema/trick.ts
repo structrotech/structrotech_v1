@@ -20,17 +20,15 @@ export const trickSchema = {
       validation: (Rule: any) => Rule.required(),
     },
     {
-      name: 'coverImage',
-      title: 'Cover Image',
-      type: 'image',
-      options: { hotspot: true },
-      validation: (Rule: any) => Rule.required(),
+      name: 'youtubeUrl',
+      title: 'YouTube Video URL (optional)',
+      description: 'Paste a YouTube video link (watch, share, or Shorts URL) to feature a video for this trick.',
+      type: 'url',
     },
     {
       name: 'excerpt',
-      title: 'Short Description',
+      title: 'Short Description (optional)',
       type: 'text',
-      validation: (Rule: any) => Rule.required(),
     },
     {
       name: 'body',
@@ -73,14 +71,16 @@ export const trickSchema = {
     {
       name: 'category',
       title: 'Category',
-      type: 'string',
+      type: 'reference',
+      to: [{ type: 'category' }],
+      description: 'Select an existing category or create a new one directly here.',
     },
     {
       name: 'author',
-      title: 'Author',
+      title: 'Author (optional)',
       type: 'reference',
       to: [{ type: 'author' }],
-      validation: (Rule: any) => Rule.required(),
+      weak: true,
     },
     {
       name: 'publishedAt',
@@ -145,7 +145,7 @@ export const trickSchema = {
     },
     {
       name: 'resources',
-      title: 'Resources (download cards)',
+      title: 'Resources (download cards - optional)',
       type: 'array',
       of: [{ type: 'downloadCard' }],
     },
@@ -165,6 +165,6 @@ export const trickSchema = {
     },
   ],
   preview: {
-    select: { title: 'question', subtitle: 'category', media: 'coverImage' },
+    select: { title: 'question', subtitle: 'category.title' },
   },
 }

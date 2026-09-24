@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { client, resolveSanityImageUrl } from "@/sanity/client";
+import { client } from "@/sanity/client";
 import { TRICK_QUERY, TRICK_SLUGS_QUERY } from "@/sanity/queries";
 import { mapSanityAuthor } from "@/lib/sanity-mappers";
 import { resolveTrickRelations } from "@/lib/related-content";
@@ -39,9 +39,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const title = trick.seoTitle || trick.question;
   const description = trick.seoDescription || trick.excerpt || undefined;
-  const ogImage = trick.coverImage
-    ? resolveSanityImageUrl(trick.coverImage)
-    : DEFAULT_OG_IMAGE;
   const canonicalPath = `/interesting-tricks/${slug}`;
   const authorName = trick.author?.name || undefined;
 
@@ -57,7 +54,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       siteName: SITE_NAME,
       title,
       description,
-      images: [ogImage],
+      images: [DEFAULT_OG_IMAGE],
       publishedTime: trick.publishedAt || undefined,
       authors: authorName ? [authorName] : undefined,
     },
@@ -65,7 +62,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
+      images: [DEFAULT_OG_IMAGE],
     },
   };
 }
@@ -89,7 +86,6 @@ export default async function SingleTrickPage({ params }: PageProps) {
   }
 
   const author = mapSanityAuthor(trick.author ?? null);
-  const coverImage = resolveSanityImageUrl(trick.coverImage);
   const category = trick.category ?? "";
 
   const formattedDate = trick.publishedAt
@@ -102,29 +98,26 @@ export default async function SingleTrickPage({ params }: PageProps) {
 
   const { tricks, blogs: relatedBlogs } = await resolveTrickRelations(trick, slug);
 
+  // Resources are optional: only render if explicitly provided
   const hasResources = Array.isArray(trick.resources) && trick.resources.length > 0;
-  const resources: any[] = hasResources
-    ? trick.resources
-    : [{ title: "Download this trick as PDF" }, { title: "Download post" }];
+  const resourcesContent = hasResources ? (
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {trick.resources.map((r: any, i: number) => (
+        <DownloadCard
+          key={i}
+          title={r.title ?? "Download"}
+          description={r.description}
+          fileUrl={r.fileUrl}
+          fileExt={r.fileExt}
+        />
+      ))}
+    </div>
+  ) : null;
 
-  const resourcesContent =
-    resources.length > 0 ? (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {resources.map((r, i) => (
-          <DownloadCard
-            key={i}
-            title={r.title ?? "Download"}
-            description={r.description}
-            fileUrl={r.fileUrl}
-            fileExt={r.fileExt}
-          />
-        ))}
-      </div>
-    ) : null;
-
+  // Horizontal wide tricks layout
   const tricksContent =
     tricks.length > 0 ? (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {tricks.map((t: any, index: number) => (
           <InterestingTrickCard
             key={t.id}
@@ -163,7 +156,6 @@ export default async function SingleTrickPage({ params }: PageProps) {
     "@type": "Article",
     headline: trick.question,
     description: trick.seoDescription || trick.excerpt || undefined,
-    image: trick.coverImage ? [coverImage] : undefined,
     datePublished: trick.publishedAt || undefined,
     dateModified: trick._updatedAt || trick.publishedAt || undefined,
     author: author.name ? { "@type": "Person", name: author.name } : undefined,
@@ -186,31 +178,31 @@ export default async function SingleTrickPage({ params }: PageProps) {
 
   return (
     <>
-    <JsonLd data={jsonLd} />
-    <JsonLd data={breadcrumbLd} />
-    <ArticleDetail
-      coverImage={coverImage}
-      title={trick.question}
-      category={category ? { label: category } : null}
-      author={author}
-      formattedDate={formattedDate}
-      readTime={trick.readTime ?? 5}
-      excerpt={trick.excerpt}
-      body={trick.body}
-      breadcrumb={{
-        items: [
-          { label: "Home", href: "/" },
-          { label: "Interesting Tricks", href: "/interesting-tricks" },
-        ],
-        current: trick.question,
-      }}
-      resourcesContent={resourcesContent}
-      tricksContent={tricksContent}
-      relatedBlogsContent={relatedBlogsContent}
-      monetization={trick.monetization}
-      lineSpacing={trick.lineSpacing}
-      letterSpacing={trick.letterSpacing}
-    />
+      <JsonLd data={jsonLd} />
+      <JsonLd data={breadcrumbLd} />
+      <ArticleDetail
+        youtubeUrl={trick.youtubeUrl}
+        title={trick.question}
+        category={category ? { label: category } : null}
+        author={author}
+        formattedDate={formattedDate}
+        readTime={trick.readTime ?? 5}
+        excerpt={trick.excerpt}
+        body={trick.body}
+        breadcrumb={{
+          items: [
+            { label: "Home", href: "/" },
+            { label: "Interesting Tricks", href: "/interesting-tricks" },
+          ],
+          current: trick.question,
+        }}
+        resourcesContent={resourcesContent}
+        tricksContent={tricksContent}
+        relatedBlogsContent={relatedBlogsContent}
+        monetization={trick.monetization}
+        lineSpacing={trick.lineSpacing}
+        letterSpacing={trick.letterSpacing}
+      />
     </>
   );
 }

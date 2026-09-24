@@ -30,7 +30,7 @@ export function InterestingTricksSection({ tricks = [] }: { tricks?: TrickListIt
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           {visibleTricks.map((trick, index) => (
             <div
               key={trick.id}

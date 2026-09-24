@@ -4,6 +4,7 @@ import { downloadBoxBlock } from './downloadBox'
 import { adSensePlaceholderBlock } from './adSensePlaceholder'
 import { codeBlock } from './codeBlock'
 import { dividerBlock } from './divider'
+import { youtubeBlock } from './youtube'
 
 /**
  * In-body blocks an editor can insert anywhere in the article.
@@ -16,6 +17,7 @@ export const pageBuilderBlockSchemas = [
   adSensePlaceholderBlock,
   codeBlock,
   dividerBlock,
+  youtubeBlock,
 ]
 
 /** References spread into a Portable Text array's `of` to allow inserting blocks anywhere. */

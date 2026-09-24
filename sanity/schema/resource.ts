@@ -35,9 +35,10 @@ export const resourceSchema = {
     },
     {
       name: 'author',
-      title: 'Author',
+      title: 'Author (optional)',
       type: 'reference',
       to: [{ type: 'author' }],
+      weak: true,
     },
     {
       name: 'publishedAt',

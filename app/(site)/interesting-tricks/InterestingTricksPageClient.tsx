@@ -115,7 +115,7 @@ export default function InterestingTricksPageClient({
         {visibleTricks.length > 0 ? (
           <div
             key={`${activeCategory}-${sortBy}-${searchQuery}`}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4"
           >
             {visibleTricks.map((trick, index) => (
               <div key={trick.id}>

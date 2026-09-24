@@ -28,9 +28,8 @@ export const postSchema = {
       },
       {
         name: 'excerpt',
-        title: 'Short Description',
+        title: 'Short Description (optional)',
         type: 'text',
-        validation: (Rule: any) => Rule.required(),
       },
       {
         name: 'body',
@@ -79,10 +78,10 @@ export const postSchema = {
       },
       {
         name: 'author',
-        title: 'Author',
+        title: 'Author (optional)',
         type: 'reference',
         to: [{ type: 'author' }],
-        validation: (Rule: any) => Rule.required(),
+        weak: true,
       },
       {
         name: 'publishedAt',

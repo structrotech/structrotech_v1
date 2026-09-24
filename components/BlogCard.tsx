@@ -16,7 +16,7 @@ interface BlogCardProps {
   author: Author;
   publishedAt: string;
   readTime: number;
-  excerpt: string;
+  excerpt?: string;
   category: string;
   animationDelay?: number;
 }
@@ -70,29 +70,48 @@ export function BlogCard({
             <h3 className="text-[15px] sm:text-[16px] font-semibold text-neutral-900 dark:text-neutral-100 mb-1.5 line-clamp-2 group-hover:text-primary transition-colors leading-snug">
               {title}
             </h3>
-            <p className="text-[13px] text-neutral-500 dark:text-neutral-400 line-clamp-2 mb-4 leading-relaxed flex-1">
-              {excerpt}
-            </p>
+            {excerpt ? (
+              <p className="text-[13px] text-neutral-500 dark:text-neutral-400 line-clamp-2 mb-4 leading-relaxed flex-1">
+                {excerpt}
+              </p>
+            ) : (
+              <div className="flex-1 mb-2" />
+            )}
 
             {/* Author & Meta */}
             <div className="flex items-center gap-2.5 justify-between pt-3 border-t border-neutral-100 dark:border-neutral-800/80">
-              <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                <Image
-                  src={author.avatar}
-                  alt={author.name}
-                  width={28}
-                  height={28}
-                  className="rounded-full shrink-0"
-                />
+              <a
+                href={author.socialUrl || "https://www.instagram.com/nithin_techie"}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex items-center gap-2.5 flex-1 min-w-0 group/author hover:opacity-85 transition-opacity"
+                title="Visit Instagram @nithin_techie"
+              >
+                {author.avatar ? (
+                  <Image
+                    src={author.avatar}
+                    alt={author.name}
+                    width={28}
+                    height={28}
+                    className="rounded-full shrink-0 object-cover"
+                  />
+                ) : (
+                  <div className="w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0">
+                    {author.name ? author.name.charAt(0).toUpperCase() : "A"}
+                  </div>
+                )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs font-medium text-neutral-900 dark:text-neutral-200 truncate">
+                  <p className="text-xs font-medium text-neutral-900 dark:text-neutral-200 truncate leading-snug group-hover/author:text-primary transition-colors">
                     {author.name}
                   </p>
-                  <p className="text-[11px] text-neutral-400 dark:text-neutral-500">
-                    {formattedDate}
+                  <p className="text-[11px] text-muted-foreground truncate">
+                    {author.socialHandle
+                      ? (author.socialHandle.startsWith("@") ? author.socialHandle : `@${author.socialHandle}`)
+                      : "@nithin_techie"}
                   </p>
                 </div>
-              </div>
+              </a>
               {/* Share Button */}
               <button
                 className="p-1.5 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-full transition-colors shrink-0 text-neutral-400 hover:text-neutral-900 dark:hover:text-white"

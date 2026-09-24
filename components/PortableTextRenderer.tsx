@@ -8,6 +8,7 @@ import { SponsorBannerBlock } from "@/components/blocks/SponsorBannerBlock";
 import { DownloadBoxBlock } from "@/components/blocks/DownloadBoxBlock";
 import { AdPlaceholderBlock } from "@/components/blocks/AdPlaceholderBlock";
 import { CodeAccordionBlock } from "@/components/blocks/CodeAccordionBlock";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 
 const HEADING_STYLES = {
   h2: "text-[28px] sm:text-[30px] font-bold leading-tight mt-10 mb-4 text-foreground font-serif",
@@ -131,22 +132,57 @@ function getPortableTextComponents(
       adSensePlaceholder: ({ value }: { value: any }) => <AdPlaceholderBlock value={value} />,
       adPlaceholder: ({ value }: { value: any }) => <AdPlaceholderBlock value={value} />,
       codeBlock: ({ value }: { value: any }) => <CodeAccordionBlock value={value} />,
-      divider: ({ value }: { value?: { style?: string } }) => {
+      divider: ({
+        value,
+      }: {
+        value?: { style?: string; tone?: string; thickness?: string };
+      }) => {
         const style = value?.style || "solid";
+        const tone = value?.tone || "normal";
+        const thickness = value?.thickness || "1";
+
         const borderStyle =
           style === "dashed"
             ? "border-dashed"
             : style === "dotted"
             ? "border-dotted"
             : "border-solid";
+
+        const borderWidth =
+          thickness === "3"
+            ? "border-t-[3px]"
+            : thickness === "2"
+            ? "border-t-2"
+            : "border-t";
+
+        const borderColor =
+          tone === "dark"
+            ? "border-neutral-900 dark:border-neutral-100"
+            : tone === "minimal"
+            ? "border-neutral-300 dark:border-neutral-700"
+            : "border-neutral-400 dark:border-neutral-500"; // 'normal' dark visible
+
         return (
           <hr
-            className={`my-8 sm:my-10 border-0 border-t border-border/70 ${borderStyle}`}
+            className={`my-8 sm:my-10 border-0 ${borderWidth} ${borderStyle} ${borderColor}`}
           />
         );
       },
-      break: () => <hr className="my-8 sm:my-10 border-0 border-t border-border/70 border-solid" />,
-      hr: () => <hr className="my-8 sm:my-10 border-0 border-t border-border/70 border-solid" />,
+      break: () => (
+        <hr className="my-8 sm:my-10 border-0 border-t border-solid border-neutral-400 dark:border-neutral-500" />
+      ),
+      hr: () => (
+        <hr className="my-8 sm:my-10 border-0 border-t border-solid border-neutral-400 dark:border-neutral-500" />
+      ),
+      youtube: ({ value }: { value: any }) => (
+        <YouTubeEmbed url={value?.url} caption={value?.caption} />
+      ),
+      youtubeVideo: ({ value }: { value: any }) => (
+        <YouTubeEmbed url={value?.url} caption={value?.caption} />
+      ),
+      videoEmbed: ({ value }: { value: any }) => (
+        <YouTubeEmbed url={value?.url} caption={value?.caption} />
+      ),
     },
     block: {
       h2: ({ children }) => <h2 className={HEADING_STYLES.h2}>{children}</h2>,

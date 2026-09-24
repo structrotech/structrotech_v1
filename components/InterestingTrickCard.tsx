@@ -5,15 +5,6 @@ import { motion } from "framer-motion";
 import { fadeUpInViewProps } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
-const baseCardClass =
-  "group flex h-full flex-col justify-between rounded-[22px] sm:rounded-[24px] overflow-hidden bg-white border border-black/[0.06] shadow-[0_4px_20px_rgba(0,0,0,0.05),0_1px_2px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.09),0_2px_6px_rgba(0,0,0,0.04)] hover:-translate-y-1 transition-all duration-300 dark:bg-[#1c1c1e] dark:border-white/[0.08] dark:shadow-[0_4px_24px_rgba(0,0,0,0.4)] dark:hover:border-white/20 dark:hover:shadow-[0_12px_36px_rgba(0,0,0,0.65)]";
-
-const sizeClass: Record<NonNullable<InterestingTrickCardProps["size"]>, string> =
-  {
-    default: "min-h-[112px] p-4",
-    sm: "min-h-[96px] p-3.5",
-  };
-
 interface InterestingTrickCardProps {
   question: string;
   slug?: string;
@@ -25,6 +16,10 @@ interface InterestingTrickCardProps {
   className?: string;
 }
 
+/**
+ * Minimal, professional horizontal trick card.
+ * Short in height/length, wide in width, with the category in the right-side corner.
+ */
 export function InterestingTrickCard({
   question,
   slug,
@@ -36,37 +31,52 @@ export function InterestingTrickCard({
   className,
 }: InterestingTrickCardProps) {
   const href = slug ? `/interesting-tricks/${slug}` : `/blogs/${blogSlug ?? ""}`;
+  const isSm = size === "sm";
+
   return (
-    <motion.div {...fadeUpInViewProps(animationDelay)} className={cn("h-full", className)}>
+    <motion.div {...fadeUpInViewProps(animationDelay)} className={cn("w-full", className)}>
       <Link
         href={href}
-        className={cn(baseCardClass, sizeClass[size])}
+        className={cn(
+          "group relative flex w-full items-center justify-between gap-3 sm:gap-4 overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-200",
+          "border border-black/[0.08] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-[0_8px_20px_rgba(0,0,0,0.06)]",
+          "dark:border-white/[0.08] dark:bg-[#18181b] dark:shadow-[0_2px_12px_rgba(0,0,0,0.25)] dark:hover:border-primary/40 dark:hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)]",
+          isSm ? "min-h-[50px] px-3.5 py-2.5" : "min-h-[58px] sm:min-h-[64px] px-4 py-3 sm:py-3.5"
+        )}
       >
-        <div className={cn("flex items-start justify-between gap-3", size === "sm" ? "mb-3" : "mb-4")}>
-          <div
+        {/* Left: Minimal index number */}
+        <span
+          className={cn(
+            "shrink-0 flex items-center justify-center rounded-lg border font-semibold tabular-nums transition-colors",
+            "border-primary/20 bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground",
+            isSm ? "h-7 w-7 text-xs" : "h-8 w-8 text-xs sm:text-[13px]"
+          )}
+          aria-hidden="true"
+        >
+          {String(index).padStart(2, "0")}
+        </span>
+
+        {/* Center: Trick question (clean, minimal, wide) */}
+        <p
+          className={cn(
+            "min-w-0 flex-1 text-left font-medium leading-snug text-foreground transition-colors group-hover:text-primary line-clamp-2",
+            isSm ? "text-[13.5px] sm:text-[14px]" : "text-[14.5px] sm:text-[15px]"
+          )}
+        >
+          {question}
+        </p>
+
+        {/* Right Side Corner: Category */}
+        {category ? (
+          <span
             className={cn(
-              "shrink-0 items-center justify-center rounded-xl border border-primary/25 bg-primary/10 font-bold tabular-nums text-primary",
-              size === "sm" ? "flex h-9 w-9 text-sm" : "flex h-10 w-10 text-base"
+              "shrink-0 self-center rounded-full border border-border/80 bg-muted/40 px-2.5 py-0.5 font-medium tracking-wide text-muted-foreground transition-colors group-hover:border-primary/30 group-hover:text-foreground",
+              isSm ? "text-[10px]" : "text-[11px]"
             )}
-            aria-hidden="true"
           >
-            {index}
-          </div>
-          <span className="rounded-full border border-border bg-muted/50 px-2.5 py-0.5 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
             {category}
           </span>
-        </div>
-
-        <div className="flex items-end justify-between gap-3">
-          <p
-            className={cn(
-              "text-left font-medium leading-snug text-foreground transition-colors group-hover:text-primary",
-              size === "sm" ? "text-[14px]" : "text-[15px]"
-            )}
-          >
-            {question}
-          </p>
-        </div>
+        ) : null}
       </Link>
     </motion.div>
   );

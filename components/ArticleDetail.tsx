@@ -6,6 +6,7 @@ import { PortableTextRenderer } from "@/components/PortableTextRenderer";
 import { ShareMenu } from "@/components/ShareMenu";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { AdPlaceholderBlock } from "@/components/blocks/AdPlaceholderBlock";
+import { YouTubeEmbed } from "@/components/YouTubeEmbed";
 import { pageContainer } from "@/lib/layout";
 
 interface BreadcrumbItem {
@@ -20,10 +21,17 @@ interface Monetization {
 }
 
 interface ArticleDetailProps {
-  coverImage: string;
+  coverImage?: string | null;
+  youtubeUrl?: string | null;
   title: string;
   category?: { label: string; href?: string } | null;
-  author: { name: string; avatar: string; bio?: string };
+  author?: {
+    name: string;
+    avatar?: string;
+    bio?: string;
+    socialHandle?: string;
+    socialUrl?: string;
+  } | null;
   formattedDate: string;
   readTime?: number;
   excerpt?: string;
@@ -43,6 +51,7 @@ interface ArticleDetailProps {
  */
 export function ArticleDetail({
   coverImage,
+  youtubeUrl,
   title,
   category,
   author,
@@ -84,9 +93,17 @@ export function ArticleDetail({
             <span className="text-foreground truncate max-w-[200px]">{breadcrumb.current}</span>
           </nav>
 
-          <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-primary/40">
-            <Image src={coverImage} alt={title} fill className="object-cover" priority />
-          </div>
+          {coverImage ? (
+            <div className="relative w-full aspect-video rounded-2xl overflow-hidden mb-8 border border-black/[0.08] dark:border-white/[0.1] shadow-md">
+              <Image src={coverImage} alt={title} fill className="object-cover" priority />
+            </div>
+          ) : null}
+
+          {youtubeUrl ? (
+            <div className="mb-8">
+              <YouTubeEmbed url={youtubeUrl} title={title} />
+            </div>
+          ) : null}
 
           <header className="mb-8">
             {category ? (
@@ -130,19 +147,50 @@ export function ArticleDetail({
             <AdPlaceholderBlock value={{ enabled: true, position: "middle" }} />
           ) : null}
 
-          {author ? (
-            <div className="my-8 py-3 px-4 rounded-xl border border-border bg-card/40 flex items-center justify-between gap-4">
+          {author?.name ? (
+            <div className="my-8 py-3.5 px-4 rounded-xl border border-black/[0.08] dark:border-white/[0.09] bg-card/50 flex items-center justify-between gap-4">
               <div className="flex items-center gap-3 min-w-0">
-                <Image
-                  src={author.avatar}
-                  alt={author.name}
-                  width={38}
-                  height={38}
-                  className="rounded-full object-cover shrink-0"
-                />
-                <span className="font-medium text-foreground text-sm sm:text-base truncate">
-                  {author.name}
-                </span>
+                <a
+                  href={author.socialUrl || "https://www.instagram.com/nithin_techie"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="shrink-0 hover:opacity-85 transition-opacity"
+                  title="Visit Instagram @nithin_techie"
+                >
+                  {author.avatar ? (
+                    <Image
+                      src={author.avatar}
+                      alt={author.name}
+                      width={40}
+                      height={40}
+                      className="rounded-full object-cover shrink-0"
+                    />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
+                      {author.name.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </a>
+                <div className="flex flex-col min-w-0">
+                  <a
+                    href={author.socialUrl || "https://www.instagram.com/nithin_techie"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-foreground text-sm sm:text-base truncate leading-snug hover:text-primary transition-colors"
+                  >
+                    {author.name}
+                  </a>
+                  <a
+                    href={author.socialUrl || "https://www.instagram.com/nithin_techie"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-muted-foreground hover:text-primary transition-colors truncate font-sans mt-0.5"
+                  >
+                    {author.socialHandle
+                      ? (author.socialHandle.startsWith("@") ? author.socialHandle : `@${author.socialHandle}`)
+                      : "@nithin_techie"}
+                  </a>
+                </div>
               </div>
               <ShareMenu
                 title={title}

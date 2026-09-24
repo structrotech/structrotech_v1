@@ -2,10 +2,12 @@ import { resolveSanityImageUrl } from "@/sanity/client";
 import type { Author, Resource } from "@/types/sanity";
 
 export const defaultAuthor: Author = {
-  name: "StructroLearn",
-  slug: "structro-tech",
+  name: "Nithin",
+  slug: "nithin",
   avatar: "/placeholder-user.jpg",
   bio: "",
+  socialHandle: "@nithin_techie",
+  socialUrl: "https://www.instagram.com/nithin_techie",
 };
 
 export type BlogListPost = {
@@ -53,6 +55,8 @@ export function mapSanityAuthor(raw: {
   slug?: { current?: string };
   avatar?: unknown;
   bio?: string;
+  socialHandle?: string;
+  socialUrl?: string;
 } | null): Author {
   if (!raw?.name) return defaultAuthor;
   return {
@@ -60,6 +64,8 @@ export function mapSanityAuthor(raw: {
     slug: raw.slug?.current ?? "author",
     avatar: resolveSanityImageUrl(raw.avatar, defaultAuthor.avatar),
     bio: raw.bio ?? "",
+    socialHandle: raw.socialHandle || "@nithin_techie",
+    socialUrl: raw.socialUrl || "https://www.instagram.com/nithin_techie",
   };
 }
 
@@ -117,7 +123,7 @@ export function mapSanityTrick(raw: {
   _id: string;
   question: string;
   slug?: { current?: string };
-  category?: string;
+  category?: string | { title?: string; slug?: { current?: string } };
   featuredOnHome?: boolean;
   homeOrder?: number;
   publishedAt?: string;
@@ -125,12 +131,17 @@ export function mapSanityTrick(raw: {
   readTime?: number;
   linkedPost?: { slug?: { current?: string } };
 }): TrickListItem {
+  const categoryTitle =
+    typeof raw.category === "string"
+      ? raw.category
+      : raw.category?.title ?? "";
+
   return {
     id: raw._id,
     question: raw.question,
     slug: raw.slug?.current ?? "",
     blogSlug: raw.linkedPost?.slug?.current ?? "",
-    category: raw.category ?? "",
+    category: categoryTitle,
     featuredOnHome: raw.featuredOnHome ?? false,
     homeOrder: raw.homeOrder ?? 0,
     publishedAt: raw.publishedAt ?? "",

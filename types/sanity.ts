@@ -13,6 +13,8 @@ export interface Author {
   slug: string;
   avatar: string;
   bio: string;
+  socialHandle?: string;
+  socialUrl?: string;
 }
 
 export interface Post {

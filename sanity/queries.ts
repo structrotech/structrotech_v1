@@ -35,7 +35,9 @@ export const POSTS_QUERY = groq`
       name,
       slug,
       avatar,
-      bio
+      bio,
+      socialHandle,
+      socialUrl
     }
   }
 `
@@ -65,7 +67,9 @@ export const POST_QUERY = groq`
       name,
       slug,
       avatar,
-      bio
+      bio,
+      socialHandle,
+      socialUrl
     },
     resources[]{
       title,
@@ -77,7 +81,7 @@ export const POST_QUERY = groq`
       _id,
       question,
       slug,
-      category,
+      "category": coalesce(category->title, category, ""),
       linkedPost->{ slug }
     },
     relatedBlogs[]->{
@@ -149,7 +153,7 @@ export const TRICKS_QUERY = groq`
     _id,
     question,
     slug,
-    category,
+    "category": coalesce(category->title, category, ""),
     featuredOnHome,
     homeOrder,
     popular,
@@ -166,7 +170,7 @@ export const FEATURED_TRICKS_QUERY = groq`
     _id,
     question,
     slug,
-    category,
+    "category": coalesce(category->title, category, ""),
     popular,
     publishedAt,
     readTime,
@@ -181,7 +185,7 @@ export const TRICKS_BY_BLOG_QUERY = groq`
     _id,
     question,
     slug,
-    category,
+    "category": coalesce(category->title, category, ""),
     linkedPost->{
       slug
     }
@@ -194,10 +198,10 @@ export const TRICK_QUERY = groq`
     _updatedAt,
     question,
     slug,
-    coverImage,
+    youtubeUrl,
     excerpt,
     body,
-    category,
+    "category": coalesce(category->title, category, ""),
     publishedAt,
     readTime,
     seoTitle,
@@ -209,7 +213,9 @@ export const TRICK_QUERY = groq`
       name,
       slug,
       avatar,
-      bio
+      bio,
+      socialHandle,
+      socialUrl
     },
     resources[]{
       title,
@@ -221,7 +227,7 @@ export const TRICK_QUERY = groq`
       _id,
       question,
       slug,
-      category,
+      "category": coalesce(category->title, category, ""),
       linkedPost->{ slug }
     },
     relatedBlogs[]->{
@@ -249,7 +255,7 @@ export const RECENT_TRICKS_QUERY = groq`
     _id,
     question,
     slug,
-    category,
+    "category": coalesce(category->title, category, ""),
     linkedPost->{ slug }
   }
 `

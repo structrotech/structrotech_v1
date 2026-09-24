@@ -104,14 +104,10 @@ export default async function SingleBlogPage({ params }: PageProps) {
   const { tricks, blogs: relatedBlogs } = await resolveBlogRelations(post, slug);
 
   const hasResources = Array.isArray(post.resources) && post.resources.length > 0;
-  const resources: any[] = hasResources
-    ? post.resources
-    : [{ title: "Download this blog as PDF" }, { title: "Download post" }];
-
   const resourcesContent =
-    resources.length > 0 ? (
+    hasResources ? (
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {resources.map((r, i) => (
+        {post.resources.map((r: any, i: number) => (
           <DownloadCard
             key={i}
             title={r.title ?? "Download"}
@@ -125,7 +121,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
 
   const tricksContent =
     tricks.length > 0 ? (
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
         {tricks.map((trick: any, index: number) => (
           <InterestingTrickCard
             key={trick.id}
