@@ -28,34 +28,68 @@ export function SafeDeleteAction(props: DocumentActionProps): DocumentActionDesc
               const publishedId = props.id.replace(/^drafts\./, '')
               const draftId = `drafts.${publishedId}`
 
-              // 1. Find all documents that reference this document in relatedBlogs or relatedTricks
-              const referencingDocs = await client.fetch<
-                Array<{ _id: string; relatedBlogs?: Array<{ _ref: string }>; relatedTricks?: Array<{ _ref: string }> }>
-              >(
-                `*[references($id)]{ _id, relatedBlogs, relatedTricks }`,
+              // 1. Find ANY documents that reference this document anywhere
+              const referencingDocs = await client.fetch<Array<Record<string, any>>>(
+                `*[references($id)]`,
                 { id: publishedId }
               )
 
               // 2. Unlink this document from all referencing documents
               for (const doc of referencingDocs) {
+                // If it is an old dead "trick" document (legacy prototype), delete it directly
+                if (doc._type === 'trick') {
+                  try {
+                    await client.delete(doc._id)
+                  } catch (e) {
+                    console.error('Error deleting legacy trick:', e)
+                  }
+                  continue
+                }
+
                 let patch = client.patch(doc._id)
-                let shouldPatch = false
+                const unsets: string[] = []
 
-                if (doc.relatedBlogs && doc.relatedBlogs.some((r) => r._ref === publishedId)) {
-                  patch = patch.unset([`relatedBlogs[_ref=="${publishedId}"]`])
-                  shouldPatch = true
-                }
-                if (doc.relatedTricks && doc.relatedTricks.some((r) => r._ref === publishedId)) {
-                  patch = patch.unset([`relatedTricks[_ref=="${publishedId}"]`])
-                  shouldPatch = true
+                // Unlink single reference fields like linkedPost
+                if (doc.linkedPost && (doc.linkedPost._ref === publishedId || doc.linkedPost._ref === draftId)) {
+                  unsets.push('linkedPost')
                 }
 
-                if (shouldPatch) {
-                  await patch.commit()
+                // Unlink array references like relatedBlogs
+                if (Array.isArray(doc.relatedBlogs) && doc.relatedBlogs.some((r: any) => r?._ref === publishedId || r?._ref === draftId)) {
+                  unsets.push(`relatedBlogs[_ref=="${publishedId}"]`)
+                  unsets.push(`relatedBlogs[_ref=="${draftId}"]`)
+                }
+
+                // Unlink array references like relatedTricks
+                if (Array.isArray(doc.relatedTricks) && doc.relatedTricks.some((r: any) => r?._ref === publishedId || r?._ref === draftId)) {
+                  unsets.push(`relatedTricks[_ref=="${publishedId}"]`)
+                  unsets.push(`relatedTricks[_ref=="${draftId}"]`)
+                }
+
+                // Scan any other top-level fields for direct references
+                for (const [key, value] of Object.entries(doc)) {
+                  if (
+                    value &&
+                    typeof value === 'object' &&
+                    (value as any)._type === 'reference' &&
+                    ((value as any)._ref === publishedId || (value as any)._ref === draftId)
+                  ) {
+                    if (!unsets.includes(key)) {
+                      unsets.push(key)
+                    }
+                  }
+                }
+
+                if (unsets.length > 0) {
+                  try {
+                    await patch.unset(unsets).commit()
+                  } catch (e) {
+                    console.error(`Error unsetting references on ${doc._id}:`, e)
+                  }
                 }
               }
 
-              // 3. Delete this document (both draft and published)
+              // 3. Delete this document (both draft and published versions)
               const tx = client.transaction()
               tx.delete(draftId)
               tx.delete(publishedId)
