@@ -87,12 +87,8 @@ export const postSchema = {
         name: 'publishedAt',
         title: 'Published Date',
         type: 'datetime',
+        initialValue: () => new Date().toISOString(),
         validation: (Rule: any) => Rule.required(),
-      },
-      {
-        name: 'readTime',
-        title: 'Read Time (mins)',
-        type: 'number',
       },
       {
         name: 'featured',
@@ -123,10 +119,15 @@ export const postSchema = {
         type: 'object',
         options: { collapsible: true, collapsed: false },
         fields: [
-          { name: 'adTop', title: 'Show Top Ad', type: 'boolean', initialValue: false },
-          { name: 'adMiddle', title: 'Show Middle Ad', type: 'boolean', initialValue: false },
-          { name: 'adBottom', title: 'Show Bottom Ad', type: 'boolean', initialValue: false },
+          { name: 'adTop', title: 'Show Top Ad', type: 'boolean', initialValue: true },
+          { name: 'adMiddle', title: 'Show Middle Ad', type: 'boolean', initialValue: true },
+          { name: 'adBottom', title: 'Show Bottom Ad', type: 'boolean', initialValue: true },
         ],
+        initialValue: {
+          adTop: true,
+          adMiddle: true,
+          adBottom: true,
+        },
       },
       {
         name: 'resources',

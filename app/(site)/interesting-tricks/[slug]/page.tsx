@@ -186,7 +186,6 @@ export default async function SingleTrickPage({ params }: PageProps) {
         category={category ? { label: category } : null}
         author={author}
         formattedDate={formattedDate}
-        readTime={trick.readTime ?? 5}
         excerpt={trick.excerpt}
         body={trick.body}
         breadcrumb={{

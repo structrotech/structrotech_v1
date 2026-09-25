@@ -19,7 +19,7 @@ export type BlogListPost = {
   categorySlug: string;
   publishedAt: string;
   updatedAt?: string;
-  readTime: number;
+  readTime?: number;
   excerpt: string;
   featured: boolean;
 };
@@ -45,7 +45,7 @@ export type TrickListItem = {
   homeOrder: number;
   publishedAt: string;
   popular: boolean;
-  readTime: number;
+  readTime?: number;
 };
 
 export type ResourceListItem = Resource;
@@ -92,7 +92,7 @@ export function mapSanityPostForCard(raw: {
     categorySlug: raw.category?.slug?.current ?? "",
     publishedAt: raw.publishedAt ?? raw._createdAt ?? "",
     updatedAt: raw._updatedAt ?? raw.publishedAt ?? "",
-    readTime: raw.readTime ?? 5,
+    readTime: raw.readTime || undefined,
     excerpt: raw.excerpt ?? "",
     featured: raw.featured ?? false,
   };
@@ -146,7 +146,7 @@ export function mapSanityTrick(raw: {
     homeOrder: raw.homeOrder ?? 0,
     publishedAt: raw.publishedAt ?? "",
     popular: raw.popular ?? false,
-    readTime: raw.readTime ?? 5,
+    readTime: raw.readTime || undefined,
   };
 }
 

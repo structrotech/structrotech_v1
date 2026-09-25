@@ -20,10 +20,10 @@ export function sortPosts(posts: BlogListPost[], sortBy: string): BlogListPost[]
         if (Boolean(a.featured) !== Boolean(b.featured)) {
           return a.featured ? -1 : 1;
         }
-        return b.readTime - a.readTime;
+        return (b.readTime ?? 0) - (a.readTime ?? 0);
       });
     case "Beginner Friendly":
-      return sorted.sort((a, b) => a.readTime - b.readTime);
+      return sorted.sort((a, b) => (a.readTime ?? 0) - (b.readTime ?? 0));
     default:
       return sorted;
   }

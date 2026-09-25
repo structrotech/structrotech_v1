@@ -33,7 +33,6 @@ interface ArticleDetailProps {
     socialUrl?: string;
   } | null;
   formattedDate: string;
-  readTime?: number;
   excerpt?: string;
   body: unknown;
   breadcrumb: { items: BreadcrumbItem[]; current: string };
@@ -56,7 +55,6 @@ export function ArticleDetail({
   category,
   author,
   formattedDate,
-  readTime,
   excerpt,
   body,
   breadcrumb,
@@ -67,7 +65,11 @@ export function ArticleDetail({
   lineSpacing,
   letterSpacing,
 }: ArticleDetailProps) {
-  const ads = monetization ?? {};
+  const ads = {
+    adTop: monetization?.adTop ?? true,
+    adMiddle: monetization?.adMiddle ?? true,
+    adBottom: monetization?.adBottom ?? true,
+  };
   return (
     <div className="relative min-h-screen py-12 w-full bg-white dark:bg-black">
       <div
@@ -122,7 +124,7 @@ export function ArticleDetail({
                 )}
               </div>
             ) : null}
-            <h1 className="text-[clamp(26px,4vw,40px)] font-bold text-foreground mb-4 text-balance font-serif">
+            <h1 className="w-full text-3xl sm:text-4xl lg:text-[42px] font-bold text-foreground mb-4 font-serif leading-[1.2] tracking-tight break-words">
               {title}
             </h1>
             <div className="flex items-center gap-4">

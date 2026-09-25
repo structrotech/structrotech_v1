@@ -15,7 +15,7 @@ interface BlogCardProps {
   coverImage: string;
   author: Author;
   publishedAt: string;
-  readTime: number;
+  readTime?: number;
   excerpt?: string;
   category: string;
   animationDelay?: number;

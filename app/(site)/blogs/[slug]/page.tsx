@@ -195,7 +195,6 @@ export default async function SingleBlogPage({ params }: PageProps) {
       }
       author={author}
       formattedDate={formattedDate}
-      readTime={post.readTime ?? 5}
       excerpt={post.excerpt}
       body={post.body}
       breadcrumb={{

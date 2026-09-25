@@ -25,7 +25,7 @@ export interface Post {
   category: string;
   categorySlug: string;
   publishedAt: string;
-  readTime: number;
+  readTime?: number;
   excerpt: string;
   body: string;
   featured: boolean;

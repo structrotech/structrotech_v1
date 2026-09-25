@@ -1,5 +1,6 @@
 import { pageBuilderBlockRefs } from './blocks'
 import { bodyImage } from './bodyImage'
+import { CategoryInput } from '../components/CategoryInput'
 
 export const trickSchema = {
   name: 'interestingTrick',
@@ -73,6 +74,9 @@ export const trickSchema = {
       title: 'Category (Pill Badge)',
       description: 'The tag shown on the trick card pill badge (e.g., Windows, Android, Productivity, Shortcuts, Tech). Independent from blog categories.',
       type: 'string',
+      components: {
+        input: CategoryInput,
+      },
     },
     {
       name: 'author',
@@ -85,12 +89,8 @@ export const trickSchema = {
       name: 'publishedAt',
       title: 'Published Date',
       type: 'datetime',
+      initialValue: () => new Date().toISOString(),
       validation: (Rule: any) => Rule.required(),
-    },
-    {
-      name: 'readTime',
-      title: 'Read Time (mins)',
-      type: 'number',
     },
     {
       name: 'linkedPost',
@@ -137,10 +137,15 @@ export const trickSchema = {
       type: 'object',
       options: { collapsible: true, collapsed: false },
       fields: [
-        { name: 'adTop', title: 'Show Top Ad', type: 'boolean', initialValue: false },
-        { name: 'adMiddle', title: 'Show Middle Ad', type: 'boolean', initialValue: false },
-        { name: 'adBottom', title: 'Show Bottom Ad', type: 'boolean', initialValue: false },
+        { name: 'adTop', title: 'Show Top Ad', type: 'boolean', initialValue: true },
+        { name: 'adMiddle', title: 'Show Middle Ad', type: 'boolean', initialValue: true },
+        { name: 'adBottom', title: 'Show Bottom Ad', type: 'boolean', initialValue: true },
       ],
+      initialValue: {
+        adTop: true,
+        adMiddle: true,
+        adBottom: true,
+      },
     },
     {
       name: 'resources',
