@@ -85,13 +85,21 @@ export function ResourceCard({
             <div className="flex items-center justify-between gap-3 pt-3 border-t border-neutral-100 dark:border-neutral-800/80">
               {author ? (
                 <div className="flex items-center gap-2.5 flex-1 min-w-0">
-                  <Image
-                    src={author.avatar}
-                    alt={author.name}
-                    width={28}
-                    height={28}
-                    className="rounded-full shrink-0"
-                  />
+                  {author.avatar ? (
+                    <div className="relative w-7 h-7 min-w-[28px] min-h-[28px] max-w-[28px] max-h-[28px] aspect-square rounded-full overflow-hidden shrink-0 ring-1 ring-black/10 dark:ring-white/10">
+                      <Image
+                        src={author.avatar}
+                        alt={author.name}
+                        fill
+                        sizes="28px"
+                        className="object-cover rounded-full"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-7 h-7 min-w-[28px] min-h-[28px] rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs shrink-0 aspect-square">
+                      {author.name ? author.name.charAt(0).toUpperCase() : "A"}
+                    </div>
+                  )}
                   <div className="flex-1 min-w-0">
                     <p className="text-xs font-medium text-card-foreground truncate">
                       {author.name}

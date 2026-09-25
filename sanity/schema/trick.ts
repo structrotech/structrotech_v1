@@ -70,10 +70,9 @@ export const trickSchema = {
     },
     {
       name: 'category',
-      title: 'Category',
-      type: 'reference',
-      to: [{ type: 'category' }],
-      description: 'Select an existing category or create a new one directly here.',
+      title: 'Category (Pill Badge)',
+      description: 'The tag shown on the trick card pill badge (e.g., Windows, Android, Productivity, Shortcuts, Tech). Independent from blog categories.',
+      type: 'string',
     },
     {
       name: 'author',
@@ -165,6 +164,6 @@ export const trickSchema = {
     },
   ],
   preview: {
-    select: { title: 'question', subtitle: 'category.title' },
+    select: { title: 'question', subtitle: 'category' },
   },
 }

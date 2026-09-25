@@ -154,19 +154,19 @@ export function ArticleDetail({
                   href={author.socialUrl || "https://www.instagram.com/nithin_techie"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="shrink-0 hover:opacity-85 transition-opacity"
+                  className="relative w-10 h-10 min-w-[40px] min-h-[40px] max-w-[40px] max-h-[40px] aspect-square rounded-full overflow-hidden shrink-0 block hover:opacity-85 transition-opacity ring-1 ring-black/10 dark:ring-white/10"
                   title="Visit Instagram @nithin_techie"
                 >
                   {author.avatar ? (
                     <Image
                       src={author.avatar}
                       alt={author.name}
-                      width={40}
-                      height={40}
-                      className="rounded-full object-cover shrink-0"
+                      fill
+                      sizes="40px"
+                      className="object-cover rounded-full"
                     />
                   ) : (
-                    <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm shrink-0">
+                    <div className="w-full h-full rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm">
                       {author.name.charAt(0).toUpperCase()}
                     </div>
                   )}
