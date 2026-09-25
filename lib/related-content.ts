@@ -83,31 +83,27 @@ function dedupBlogs(items: BlogListPost[], excludeSlug = ""): BlogListPost[] {
  */
 export async function resolveBlogRelations(post: any, slug: string) {
   const manualTricks = mapManualTricks(post.relatedTricks);
-  let tricks: TrickListItem[];
-  if (manualTricks.length > 0) {
-    tricks = dedupTricks(manualTricks);
-  } else {
+  let tricks = dedupTricks(manualTricks);
+  if (tricks.length < LIMIT) {
     let combined = await fetchTricks(TRICKS_BY_BLOG_QUERY, { slug });
-    if (combined.length < LIMIT) {
+    if (tricks.length + combined.length < LIMIT) {
       combined = combined.concat(await fetchTricks(RECENT_TRICKS_QUERY, { excludeSlug: "" }));
     }
-    tricks = dedupTricks(combined);
+    tricks = dedupTricks(tricks.concat(combined));
   }
 
   const manualBlogs = mapManualBlogs(post.relatedBlogs);
-  let blogs: BlogListPost[];
+  let blogs = dedupBlogs(manualBlogs, slug);
   const category = post.category?.title ?? "";
-  if (manualBlogs.length > 0) {
-    blogs = dedupBlogs(manualBlogs, slug);
-  } else {
-    let combined: BlogListPost[] = [];
+  if (blogs.length < LIMIT) {
+    let extra: BlogListPost[] = [];
     if (category) {
-      combined = await fetchBlogs(RELATED_BLOGS_BY_CATEGORY_QUERY, { category, excludeSlug: slug });
+      extra = await fetchBlogs(RELATED_BLOGS_BY_CATEGORY_QUERY, { category, excludeSlug: slug });
     }
-    if (combined.length < LIMIT) {
-      combined = combined.concat(await fetchBlogs(RECENT_BLOGS_QUERY, { excludeSlug: slug }));
+    if (blogs.length + extra.length < LIMIT) {
+      extra = extra.concat(await fetchBlogs(RECENT_BLOGS_QUERY, { excludeSlug: slug }));
     }
-    blogs = dedupBlogs(combined, slug);
+    blogs = dedupBlogs(blogs.concat(extra), slug);
   }
 
   return { tricks, blogs };
@@ -118,27 +114,24 @@ export async function resolveBlogRelations(post: any, slug: string) {
  */
 export async function resolveTrickRelations(trick: any, slug: string) {
   const manualTricks = mapManualTricks(trick.relatedTricks);
-  let tricks: TrickListItem[];
-  if (manualTricks.length > 0) {
-    tricks = dedupTricks(manualTricks);
-  } else {
-    tricks = dedupTricks(await fetchTricks(RECENT_TRICKS_QUERY, { excludeSlug: slug }));
+  let tricks = dedupTricks(manualTricks);
+  if (tricks.length < LIMIT) {
+    const extra = await fetchTricks(RECENT_TRICKS_QUERY, { excludeSlug: slug });
+    tricks = dedupTricks(tricks.concat(extra));
   }
 
   const manualBlogs = mapManualBlogs(trick.relatedBlogs);
-  let blogs: BlogListPost[];
+  let blogs = dedupBlogs(manualBlogs);
   const category = trick.category ?? "";
-  if (manualBlogs.length > 0) {
-    blogs = dedupBlogs(manualBlogs);
-  } else {
-    let combined: BlogListPost[] = [];
+  if (blogs.length < LIMIT) {
+    let extra: BlogListPost[] = [];
     if (category) {
-      combined = await fetchBlogs(RELATED_BLOGS_BY_CATEGORY_QUERY, { category, excludeSlug: "" });
+      extra = await fetchBlogs(RELATED_BLOGS_BY_CATEGORY_QUERY, { category, excludeSlug: "" });
     }
-    if (combined.length < LIMIT) {
-      combined = combined.concat(await fetchBlogs(RECENT_BLOGS_QUERY, { excludeSlug: "" }));
+    if (blogs.length + extra.length < LIMIT) {
+      extra = extra.concat(await fetchBlogs(RECENT_BLOGS_QUERY, { excludeSlug: "" }));
     }
-    blogs = dedupBlogs(combined);
+    blogs = dedupBlogs(blogs.concat(extra));
   }
 
   return { tricks, blogs };
