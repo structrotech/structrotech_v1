@@ -9,15 +9,14 @@ export interface AdPlaceholderValue {
 export function AdPlaceholderBlock({ value }: { value: AdPlaceholderValue }) {
   if (!value || value.enabled === false) return null;
 
-  const isRectangle = value.format === "rectangle" || value.position === "middle";
+  const isRectangle = value.format === "rectangle";
   const heightClass = isRectangle ? "h-[250px]" : "h-[90px]";
 
   const label = value.format
     ? value.format === "rectangle"
       ? "Medium Rectangle (300×250)"
-      : "Leaderboard (728×90)"
-    : (value.position ?? "custom").charAt(0).toUpperCase() +
-      (value.position ?? "custom").slice(1);
+      : "Banner (728×90)"
+    : `${(value.position ?? "Ad").charAt(0).toUpperCase() + (value.position ?? "Ad").slice(1)} Banner (728×90)`;
 
   return (
     <div className="w-full my-6 not-prose">

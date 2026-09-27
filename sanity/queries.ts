@@ -126,13 +126,15 @@ export const CATEGORY_SLUGS_QUERY = groq`
 `
 
 export const POSTS_BY_CATEGORY_QUERY = groq`
-  *[_type == "post" && category->slug.current == $slug] | order(publishedAt desc) {
+  *[_type == "post" && (category->slug.current == $slug || category._ref == $slug)] | order(coalesce(categoryOrder, displayOrder, 999999) asc, publishedAt desc) {
     _id,
     title,
     slug,
     coverImage,
     excerpt,
     publishedAt,
+    displayOrder,
+    categoryOrder,
     readTime,
     featured,
     category-> {

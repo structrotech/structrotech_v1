@@ -102,6 +102,12 @@ export const postSchema = {
         type: 'number',
       },
       {
+        name: 'categoryOrder',
+        title: 'Order in Category',
+        description: 'Optional. Lower number appears first (1, 2, 3…) inside its category page (e.g. Cybersecurity). Leave empty to use Display Order or newest first.',
+        type: 'number',
+      },
+      {
         name: 'seoTitle',
         title: 'SEO Title',
         type: 'string',

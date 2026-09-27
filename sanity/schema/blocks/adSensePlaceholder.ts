@@ -6,12 +6,12 @@ export const adSensePlaceholderBlock = {
     { name: 'enabled', title: 'Enabled', type: 'boolean', initialValue: true },
     {
       name: 'format',
-      title: 'Ad Format',
+      title: 'Ad Format / Size',
       type: 'string',
-      description: 'Placeholder size only — no AdSense code is injected yet.',
+      description: 'Choose size: Small horizontal banner (same as top/middle/bottom) or medium rectangle.',
       options: {
         list: [
-          { title: 'Leaderboard (728×90)', value: 'leaderboard' },
+          { title: 'Small Horizontal Banner (728×90 - Default)', value: 'leaderboard' },
           { title: 'Medium Rectangle (300×250)', value: 'rectangle' },
         ],
         layout: 'radio',
@@ -23,7 +23,7 @@ export const adSensePlaceholderBlock = {
     select: { format: 'format', enabled: 'enabled' },
     prepare({ format, enabled }: { format?: string; enabled?: boolean }) {
       const formatLabel =
-        format === 'rectangle' ? 'Medium Rectangle (300×250)' : 'Leaderboard (728×90)'
+        format === 'rectangle' ? 'Medium Rectangle (300×250)' : 'Small Horizontal Banner (728×90)'
       return {
         title: 'Google Ad Placeholder',
         subtitle: enabled === false ? 'Disabled' : formatLabel,

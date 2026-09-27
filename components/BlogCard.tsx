@@ -85,7 +85,7 @@ export function BlogCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex items-center gap-2.5 flex-1 min-w-0 group/author hover:opacity-85 transition-opacity"
+                className="inline-flex items-center gap-2.5 max-w-[calc(100%-40px)] group/author hover:opacity-85 transition-opacity"
                 title="Visit Instagram @nithin_techie"
               >
                 {author.avatar ? (
@@ -103,7 +103,7 @@ export function BlogCard({
                     {author.name ? author.name.charAt(0).toUpperCase() : "A"}
                   </div>
                 )}
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0">
                   <p className="text-xs font-medium text-neutral-900 dark:text-neutral-200 truncate leading-snug group-hover/author:text-primary transition-colors">
                     {author.name}
                   </p>
