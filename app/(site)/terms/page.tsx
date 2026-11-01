@@ -48,7 +48,7 @@ const sections: LegalSection[] = [
           When you create an account, you agree to provide accurate information and keep your
           credentials confidential. You are responsible for all activity under your account.
           Notify us immediately at{" "}
-          <a href="mailto:contactstructrotech@gmail.com">contactstructrotech@gmail.com</a> if you suspect
+          <a href="mailto:contact@structrolearn.com">contact@structrolearn.com</a> if you suspect
           unauthorized access.
         </p>
         <p>We may suspend or terminate accounts that violate these Terms or pose security risks.</p>

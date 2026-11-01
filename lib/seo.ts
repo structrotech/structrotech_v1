@@ -29,6 +29,8 @@ export function pageMetadata({
       title,
       description,
       images: [DEFAULT_OG_IMAGE],
+      creator: "@structrolearn",
+      site: "@structrolearn",
     },
   };
 }
@@ -40,6 +42,13 @@ export function organizationJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
+    sameAs: [
+      "https://www.instagram.com/structrolearn/",
+      "https://x.com/structrolearn",
+      "https://www.youtube.com/@structrolearn",
+      "https://www.linkedin.com/company/structro/",
+      "https://github.com/structro",
+    ],
   };
 }
 

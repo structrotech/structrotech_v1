@@ -37,6 +37,8 @@ export const metadata: Metadata = {
     description:
       "We make evolving technologies and complex concepts simple, structured, and organized.",
     images: [DEFAULT_OG_IMAGE],
+    creator: "@structrolearn",
+    site: "@structrolearn",
   },
   generator: "Next.js",
 };

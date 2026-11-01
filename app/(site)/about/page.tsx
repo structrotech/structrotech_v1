@@ -14,6 +14,7 @@ import {
   Twitter,
   Linkedin,
   Youtube,
+  Github,
 } from "lucide-react";
 import {
   pageContainer,
@@ -69,32 +70,38 @@ const contactChannels: ContactChannel[] = [
   {
     icon: Mail,
     label: "Email",
-    value: "contactstructrotech@gmail.com",
-    href: "mailto:contactstructrotech@gmail.com",
+    value: "contact@structrolearn.com",
+    href: "mailto:contact@structrolearn.com",
   },
   {
     icon: Instagram,
     label: "Instagram",
-    value: "@structrotech",
-    href: "https://www.instagram.com/structrotech/",
+    value: "@structrolearn",
+    href: "https://www.instagram.com/structrolearn/",
   },
   {
     icon: Twitter,
     label: "X (Twitter)",
-    value: "Coming soon",
-    soon: true,
-  },
-  {
-    icon: Linkedin,
-    label: "LinkedIn",
-    value: "Coming soon",
-    soon: true,
+    value: "@structrolearn",
+    href: "https://x.com/structrolearn",
   },
   {
     icon: Youtube,
     label: "YouTube",
-    value: "Coming soon",
-    soon: true,
+    value: "@structrolearn",
+    href: "https://www.youtube.com/@structrolearn",
+  },
+  {
+    icon: Linkedin,
+    label: "LinkedIn",
+    value: "structro",
+    href: "https://www.linkedin.com/company/structro/",
+  },
+  {
+    icon: Github,
+    label: "GitHub",
+    value: "structro",
+    href: "https://github.com/structro",
   },
 ];
 

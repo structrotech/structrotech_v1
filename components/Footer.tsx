@@ -31,11 +31,11 @@ const productLinks = [
 ];
 
 const socialLinks = [
-  { href: "https://www.youtube.com/@Structrotech", icon: Youtube, label: "YouTube" },
-  { href: "https://www.linkedin.com/company/structrotech/?viewAsMember=true", icon: Linkedin, label: "LinkedIn" },
-  { href: "https://x.com/structrotech", icon: Twitter, label: "Twitter" },
-  { href: "https://www.instagram.com/structrotech/", icon: Instagram, label: "Instagram" },
-  { href: "https://github.com/structrotech", icon: Github, label: "GitHub" },
+  { href: "https://www.instagram.com/structrolearn/", icon: Instagram, label: "Instagram" },
+  { href: "https://x.com/structrolearn", icon: Twitter, label: "X (Twitter)" },
+  { href: "https://www.youtube.com/@structrolearn", icon: Youtube, label: "YouTube" },
+  { href: "https://www.linkedin.com/company/structro/", icon: Linkedin, label: "LinkedIn" },
+  { href: "https://github.com/structro", icon: Github, label: "GitHub" },
 ];
 
 export function Footer() {

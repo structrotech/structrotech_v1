@@ -185,7 +185,7 @@ const sections: LegalSection[] = [
         </ul>
         <p>
           To exercise these rights, contact us at{" "}
-          <a href="mailto:contactstructrotech@gmail.com">contactstructrotech@gmail.com</a>. We will respond
+          <a href="mailto:contact@structrolearn.com">contact@structrolearn.com</a>. We will respond
           within the timeframe required by applicable law.
         </p>
       </>
